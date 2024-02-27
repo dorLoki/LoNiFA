@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,18 +46,19 @@ public class PalWorldContoller {
 
 	@PostMapping("/palworld/restart")
 	@ResponseBody
-	public ResponseEntity<String> restart(Principal principal) {
+	public ResponseEntity<String> restart(@NonNull Principal principal) {
 		final String shutdown = "Shutdown 300 In_5_Minuten_wird_der_Server_neugestartet!";
 		String status = palWorldRconService.sendCommand(shutdown);
 		logCommand(principal, shutdown, status);
 		return ResponseEntity.ok(status);
 	}
 
-	private void logCommand(Principal principal, String command, String response) {
-		if (principal == null) {
-			throw new IllegalAccessError("Error loggig command. Invalid Principal");
+	private void logCommand(@NonNull Principal principal, String command, String response) {
+		String name = principal.getName();
+		if (name == null) {
+			throw new IllegalAccessError("Error loggig command. Invalid Principal Name");
 		}
-		User user = userService.findByLoginName(principal.getName());
+		User user = userService.findByLoginName(name);
 		if (command == null) {
 			throw new IllegalAccessError("Error loggig command. Invalid Command");
 		}

@@ -21,6 +21,8 @@ public class PalWorldCommandServiceImpl implements PalWorldCommandService {
 
 	@Override
 	public void addCommand(PalWorldCommand palWorldCommand) {
-		palWorldCommandRepository.save(palWorldCommand);
+		if (palWorldCommand != null) {
+			palWorldCommandRepository.save(palWorldCommand);
+		}
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +48,7 @@ public class MinecraftController {
 
 	@PostMapping("/minecraft/send")
 	@ResponseBody
-	public ResponseEntity<String> sendCommand(@RequestParam String command, Principal principal) {
+	public ResponseEntity<String> sendCommand(@RequestParam String command,@NonNull Principal principal) {
 		if (command != null && command.length() > 0) {
 			// Verarbeite den Befehl
 			String status = minecraftRconService.sendCommand(command.trim());
@@ -59,17 +60,18 @@ public class MinecraftController {
 
 	@PostMapping("/minecraft/restart")
 	@ResponseBody
-	public ResponseEntity<String> restart(Principal principal) {
+	public ResponseEntity<String> restart(@NonNull Principal principal) {
 		String status = minecraftRconService.sendCommand("stop");
 		logCommand(principal, "stop", status);
 		return ResponseEntity.ok(status);
 	}
 	
-	private void logCommand(Principal principal, String command, String response) {
-		if(principal == null) {
-			throw new IllegalAccessError("Error loggig command. Invalid Principal");
+	private void logCommand(@NonNull Principal principal, String command, String response) {
+		String name = principal.getName();
+		if (name == null){
+			throw new IllegalAccessError("Error loggig command. Invalid Principal Name");
 		}
-		User user = userService.findByLoginName(principal.getName());
+		User user = userService.findByLoginName(name);
 		if(command == null) {
 			throw new IllegalAccessError("Error loggig command. Invalid Command");
 		}

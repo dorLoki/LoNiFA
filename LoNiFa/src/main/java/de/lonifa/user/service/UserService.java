@@ -3,6 +3,8 @@ package de.lonifa.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.lang.NonNull;
+
 import de.lonifa.user.domain.User;
 
 /**
@@ -21,7 +23,7 @@ public interface UserService {
 	 *
 	 * @param user Der hinzuzufügende Kunde.
 	 */
-	void addUser(User user);
+	void addUser(@NonNull User user);
 
 	/**
 	 * Sucht einen User anhand seiner eindeutigen ID.
@@ -30,14 +32,14 @@ public interface UserService {
 	 * @return Ein Optional, das den gefundenen User enthält oder leer ist, wenn
 	 *         kein Kunde mit der angegebenen ID gefunden wurde.
 	 */
-	Optional<User> getUserById(Integer userId);
+	Optional<User> getUserById(@NonNull Integer userId);
 
 	/**
 	 * Aktualisiert die Informationen eines vorhandenen User.
 	 *
 	 * @param user Der zu aktualisierende user.
 	 */
-	void updateUser(User user);
+	void updateUser(@NonNull User user);
 
 	/**
 	 * Sucht einen User anhand seines Login-Namens.
@@ -46,5 +48,5 @@ public interface UserService {
 	 * @return Der gefundene User oder null, wenn kein User mit dem angegebenen
 	 *         Login-Namen gefunden wurde.
 	 */
-	User findByLoginName(String name);
+	User findByLoginName(@NonNull String name);
 }

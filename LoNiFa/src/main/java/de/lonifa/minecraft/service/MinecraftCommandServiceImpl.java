@@ -21,6 +21,8 @@ public class MinecraftCommandServiceImpl implements MinecraftCommandService {
 
 	@Override
 	public void addCommand(MinecraftCommand minecraftCommand) {
-		minecraftCommandRepository.save(minecraftCommand);
+		if(minecraftCommand != null) {
+			minecraftCommandRepository.save(minecraftCommand);
+		}
 	}
 }
