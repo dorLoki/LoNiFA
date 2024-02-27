@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: head"></head>
+
+<head>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/js/palworld.js}"></script>
+</head>
+
+<body>
+	<div th:include="fragments/body :: headline"></div>
+	<button id="restartPalWorld" class="button">Restart</button>
+	<table border="1">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Player UID</th>
+				<th>Steam ID</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Iteriere über die Benutzerliste und zeige jeden Benutzer an -->
+			<tr th:each="user : ${palWorldUser}">
+				<td th:text="${user.name}"></td>
+				<td th:text="${user.playerUid}"></td>
+				<td th:text="${user.steamId}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>

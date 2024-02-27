@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: head"></head>
+<head>
+	<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script th:src="@{/js/minecraft.js}"></script>
+</head>
+
+<body>
+	<div th:include="fragments/body :: headline"></div>
+	<!-- Der Container für das Konsolenfragment -->
+	<button id="restartMinecraft" class="button">Restart</button>
+	<div id="consoleContainer" th:fragment="consoleFragment">
+		<th:block th:include="fragments/console :: consoleFragment"></th:block>
+	</div>
+	<!-- Eingabezeile für Befehle -->
+	<input type="text" id="commandInput" onkeydown="handleCommandInput(event)" placeholder="Befehl eingeben...">
+</body>
+
+</html>

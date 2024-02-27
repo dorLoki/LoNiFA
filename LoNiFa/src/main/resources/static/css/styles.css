@@ -1,0 +1,112 @@
+/* styles.css */
+body {
+	font-family: Arial, sans-serif;
+	background-color: #0d2438; /* Dunkelblauer Hintergrund */
+	color: white; /* oder #ffffff */
+}
+
+.header {
+    background-color: rgb(27, 72, 114); /* Dunkelblauer Hintergrund */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo img {
+    height: 64px; /* Höhe des Logos anpassen */
+}
+
+.header-buttons {
+	display: flex;
+	align-items: center;
+}
+
+.button {
+    text-decoration: none;
+    background-color: #4b6cb7; /* Hauptfarbe des Logos */
+    color: white;
+    padding: 10px 20px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px; /* Ecken abrunden */
+    transition: background-color 0.3s; /* Sanfter Übergang für Hover-Effekt */
+}
+
+.button:hover {
+    background-color: #2c4b82; /* Dunklere Farbe für den Hover-Effekt */
+}
+
+table {
+	width: 100%;
+	margin-top: 20px;
+}
+
+th,
+td {
+	padding: 10px;
+	text-align: left;
+}
+
+.error-content {
+	margin: 20px;
+	padding: 20px;
+	background-color: #ffdddd;
+	border: 1px solid #f44336;
+	color: #f44336;
+}
+
+.statusHeader {
+	display: inline-block;
+	padding: 10px;
+	background-color: #e0e0e0; /* Heller Hintergrund für den Status */
+    color: #0d2438; /* Textfarbe des Status */
+	border-radius: 5px;
+	margin-left: 10px;
+	/* Abstand zum Rest des Headers */
+	opacity: 1;
+	transition: opacity 0.5s ease-out;
+}
+
+.statusHeader.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-in, display 0s 0.5s;
+    display: none;
+}
+
+#console {
+	height: 70vh;
+	/* 80% der Bildschirmhöhe */
+	overflow-y: auto;
+	/* Scrollleiste anzeigen, wenn mehr Zeilen als sichtbar */
+	border: 1px solid #ccc;
+	/* Rand für visuelle Trennung hinzufügen */
+	padding: 10px;
+	/* Innenabstand hinzufügen, um den Text vom Rand zu trennen */
+	font-family: 'Minecraft', sans-serif;
+}
+
+#commandInput {
+	width: 800px;
+	padding: 10px;
+	/* Abstand um den Text im Eingabefeld */
+	font-family: 'Minecraft', sans-serif;
+	/* Verwende die Minecraft-Schriftart */
+	font-size: 16px;
+	/* Schriftgröße */
+	border: 1px solid #ccc;
+	/* Rand um das Eingabefeld */
+	border-radius: 5px;
+	/* Abrundung der Ecken */
+	outline: none;
+	/* Entferne den Standard-Rand bei Fokus */
+}
+
+/* Stil für den Fokus-Effekt (optional) */
+#commandInput:focus {
+	border-color: #4CAF50;
+	/* Ändere die Randfarbe, wenn das Eingabefeld fokussiert ist */
+	box-shadow: 0 0 5px rgba(76, 175, 80, 0.7);
+	/* Füge einen Schatten hinzu */
+}

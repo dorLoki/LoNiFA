@@ -1,0 +1,6 @@
+<!-- fragments/console.html -->
+<div id="console" th:fragment="consoleFragment">
+    <th:block th:each="line : ${consoleContent}">
+        <p th:text="${line}"></p>
+    </th:block>
+</div>

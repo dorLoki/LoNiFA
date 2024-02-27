@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head th:include="fragments/header :: head">
+</head>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+	<!-- Skript für Minecraft DataTables -->
+	<script>
+		$(document).ready(function () {
+			$('#minecraftCommandsTable').DataTable();
+		});
+	</script>
+	<script>
+		$(document).ready(function () {
+			$('#palWorldCommandsTable').DataTable();
+		});
+	</script>
+</head>
+
+<body>
+	<div th:include="fragments/body :: headline"></div>
+	<h1>Minecraft Commands</h1>
+	<table id="minecraftCommandsTable" class="display" border="1">
+		<thead>
+			<tr>
+				<th>Benutzer</th>
+				<th>Kommando</th>
+				<th>Antwort</th>
+				<th>Zeitstempel</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="command : ${minecraftCommands}">
+				<td th:text="${command.user.name}"></td>
+				<td th:text="${command.command}"></td>
+				<td th:text="${command.response}"></td>
+				<td th:text="${#dates.format(command.timestamp, 'dd.MM.yyyy HH:mm:ss')}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<h1>PalWorld Commands</h1>
+	<table id="palWorldCommandsTable" class="display" border="1">
+		<thead>
+			<tr>
+				<th>Benutzer</th>
+				<th>Kommando</th>
+				<th>Antwort</th>
+				<th>Zeitstempel</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="command : ${palWorldCommands}">
+				<td th:text="${command.user.name}"></td>
+				<td th:text="${command.command}"></td>
+				<td th:text="${command.response}"></td>
+				<td th:text="${#dates.format(command.timestamp, 'dd.MM.yyyy HH:mm:ss')}"></td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>

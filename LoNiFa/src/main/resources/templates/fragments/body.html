@@ -1,0 +1,41 @@
+<!-- body.html -->
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div th:fragment="headline">
+		<div class="header">
+			<a th:href="@{/}">
+				<img src="images/icon.png" alt="Logo" />
+			</a>
+			<div th:if="${ROLE_ADMIN}">
+				<!-- admin stuff -->
+				<a th:href="@{/admin}" class="button">Admin Bereich</a>
+			</div>
+			<div th:if="${ROLE_MOD_PALWORLD}">
+				<!-- mod palworld stuff -->
+				<a th:href="@{/palworld}" class="button">PalWorld Server</a>
+			</div>
+			<div th:if="${ROLE_MOD_MINECRAFT}">
+				<!-- mod minecraft stuff -->
+				<a th:href="@{/minecraft}" class="button">Minecraft Server</a>
+			</div>
+			<div class="header-buttons">
+				<div th:if="${name != null}">
+					<a th:href="@{/logout}" class="button">ausloggen</a>
+					<a th:href="@{/profile}" class="button"><span th:text="${name}"></span></a>
+				</div>
+				<div th:unless="${name != null}">
+					<a th:href="@{/login}" class="button">einloggen</a>
+				</div>
+			</div>
+		</div>
+		<div th:if="${status != null}">
+			<div id="statusContainer" class="statusHeader">
+				<span th:if="${status != null}" th:text="'Status: ' + ${status}"></span>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
