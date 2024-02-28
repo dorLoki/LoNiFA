@@ -1,4 +1,4 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.attribute;
 
 public class Attribute {
     private int strength;
@@ -15,6 +15,14 @@ public class Attribute {
         this.intelligence = intl;
         this.wisdom = wis;
         this.charisma = cha;
+    }
+    public Attribute(){
+        this.strength = 0;
+        this.dexterity = 0;
+        this.constitution = 0;
+        this.intelligence = 0;
+        this.wisdom = 0;
+        this.charisma = 0;
     }
     //getter and setter
     public int getStrength() {

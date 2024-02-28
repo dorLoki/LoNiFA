@@ -1,4 +1,4 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.character.clazz;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

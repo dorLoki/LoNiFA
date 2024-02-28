@@ -1,4 +1,4 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.attribute;
 
 public enum AttributeType {
     STRENGTH("Stärke"),

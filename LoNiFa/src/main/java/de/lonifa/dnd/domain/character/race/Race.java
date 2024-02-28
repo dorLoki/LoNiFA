@@ -1,10 +1,13 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.character.race;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+
+import de.lonifa.dnd.domain.attribute.Attribute;
 
 @Entity
 public class Race {
@@ -12,6 +15,7 @@ public class Race {
     @Enumerated(EnumType.STRING)
     private RaceType raceType;
     private String displayName;
+    @Column(length = 1000)
     private String description;
     @Embedded
     private Attribute attribute;

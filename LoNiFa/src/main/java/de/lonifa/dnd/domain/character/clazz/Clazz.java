@@ -1,4 +1,4 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.character.clazz;
 
 import java.util.List;
 
@@ -11,17 +11,25 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 
+import de.lonifa.dnd.domain.attribute.AttributeType;
+import de.lonifa.dnd.domain.character.item.EquipmentType;
+
 @Entity
 public class Clazz {
     @Id
     @Enumerated(EnumType.STRING)
     private ClazzType classType;
     private String displayName;
+    @Column(length = 1000)
     private String description;
     private int hitDie;
+    @Enumerated(EnumType.STRING)
     private AttributeType primaryAttribute;
+    @Enumerated(EnumType.STRING)
     private AttributeType secondaryAttribute;
+    @Enumerated(EnumType.STRING)
     private AttributeType primarySavingThrow;
+    @Enumerated(EnumType.STRING)
     private AttributeType secondarySavingThrow;
 
     @ElementCollection(targetClass = EquipmentType.class)

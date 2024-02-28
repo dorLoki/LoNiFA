@@ -1,4 +1,4 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.character.race;
 
 public enum RaceType {
     DWARF,

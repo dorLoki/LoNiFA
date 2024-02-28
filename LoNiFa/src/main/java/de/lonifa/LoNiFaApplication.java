@@ -17,9 +17,9 @@ public class LoNiFaApplication {
 	}
 
 	@Bean
-	CommandLineRunner init() {
+	CommandLineRunner init(InitDB initDB) {
 		return (args) -> {
-			new InitDB().init();
+			initDB.init();
 		};
 	}
 }

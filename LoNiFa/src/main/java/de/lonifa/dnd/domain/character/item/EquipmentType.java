@@ -1,4 +1,4 @@
-package de.lonifa.dnd.domain;
+package de.lonifa.dnd.domain.character.item;
 
 public enum EquipmentType {
     LightArmor("Leichte Rüstung"),
@@ -50,7 +50,9 @@ public enum EquipmentType {
     CrossbowHand("Handarmbrust"),
     CrossbowHeavy("Schwere Armbrust"),
     Longbow("Langbogen"),
-    Net("Netz");
+    Net("Netz"),
+
+    Item("Item");
 
     private final String displayName;
 

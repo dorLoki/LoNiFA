@@ -1,33 +1,35 @@
 package de.lonifa.security;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import de.lonifa.dnd.domain.attribute.Attribute;
+import de.lonifa.dnd.domain.attribute.AttributeType;
+import de.lonifa.dnd.domain.character.clazz.Clazz;
+import de.lonifa.dnd.domain.character.clazz.ClazzRepository;
+import de.lonifa.dnd.domain.character.clazz.ClazzType;
+import de.lonifa.dnd.domain.character.item.EquipmentType;
+import de.lonifa.dnd.domain.character.race.Race;
+import de.lonifa.dnd.domain.character.race.RaceRepository;
+import de.lonifa.dnd.domain.character.race.RaceType;
 import de.lonifa.user.domain.User;
 import de.lonifa.user.domain.UserRepository;
-import de.lonifa.dnd.domain.RaceRepository;
-import de.lonifa.dnd.domain.Race;
-import de.lonifa.dnd.domain.RaceType;
-import de.lonifa.dnd.domain.Attribute;
-import de.lonifa.dnd.domain.AttributeType;
-import de.lonifa.dnd.domain.Clazz;
-import de.lonifa.dnd.domain.ClazzRepository;
-import de.lonifa.dnd.domain.ClazzType;
-import de.lonifa.dnd.domain.EquipmentType;
 
+@Component
 public class InitDB {
-	private boolean debug = false;
-	private boolean isInitDnD_Race = false;
-	private boolean isInitDnD_clazz = false;
+	private boolean debug = true;
+	private boolean isInitDnD_Race = true;
+	private boolean isInitDnD_clazz = true;
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Autowired
-	RaceRepository raceRepository;
+	private RaceRepository raceRepository;
 	@Autowired
-	ClazzRepository clazzRepository;
+	private ClazzRepository clazzRepository;
 
 	@SuppressWarnings("null")
 	public void init() {
@@ -119,13 +121,13 @@ public class InitDB {
 		}
 		if (isInitDnD_clazz) {
 			//simple melee weapons list
-			List<EquipmentType> simpleMeleeWeapons = Arrays.asList(EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Greatclub, EquipmentType.Handaxe, EquipmentType.Javelin, EquipmentType.LightHammer, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Sickle, EquipmentType.Spear);
+			ArrayList<EquipmentType> simpleMeleeWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Greatclub, EquipmentType.Handaxe, EquipmentType.Javelin, EquipmentType.LightHammer, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Sickle, EquipmentType.Spear));
 			//simple ranged weapons list
-			List<EquipmentType> simpleRangedWeapons = Arrays.asList(EquipmentType.CrossbowLight, EquipmentType.Dart, EquipmentType.Shortbow, EquipmentType.Sling);
+			ArrayList<EquipmentType> simpleRangedWeapons = new ArrayList<>(Arrays.asList(EquipmentType.CrossbowLight, EquipmentType.Dart, EquipmentType.Shortbow, EquipmentType.Sling));
 			//martial melee weapons list
-			List<EquipmentType> martialMeleeWeapons = Arrays.asList(EquipmentType.Battleaxe, EquipmentType.Flail, EquipmentType.Glaive, EquipmentType.Greataxe, EquipmentType.Greatsword, EquipmentType.Halberd, EquipmentType.Lance, EquipmentType.Longsword, EquipmentType.Maul, EquipmentType.Morningstar, EquipmentType.Pike, EquipmentType.Rapier, EquipmentType.Scimitar, EquipmentType.Shortsword, EquipmentType.Trident, EquipmentType.WarPick, EquipmentType.Warhammer, EquipmentType.Whip);
+			ArrayList<EquipmentType> martialMeleeWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Battleaxe, EquipmentType.Flail, EquipmentType.Glaive, EquipmentType.Greataxe, EquipmentType.Greatsword, EquipmentType.Halberd, EquipmentType.Lance, EquipmentType.Longsword, EquipmentType.Maul, EquipmentType.Morningstar, EquipmentType.Pike, EquipmentType.Rapier, EquipmentType.Scimitar, EquipmentType.Shortsword, EquipmentType.Trident, EquipmentType.WarPick, EquipmentType.Warhammer, EquipmentType.Whip));
 			//martial ranged weapons list
-			List<EquipmentType> martialRangedWeapons = Arrays.asList(EquipmentType.Blowgun, EquipmentType.CrossbowHand, EquipmentType.CrossbowHeavy, EquipmentType.Longbow, EquipmentType.Net);
+			ArrayList<EquipmentType> martialRangedWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Blowgun, EquipmentType.CrossbowHand, EquipmentType.CrossbowHeavy, EquipmentType.Longbow, EquipmentType.Net));
 			//Barbarian
 			Clazz barbarian = new Clazz();
 			barbarian.setClassType(ClazzType.BARBARIAN);
@@ -137,7 +139,8 @@ public class InitDB {
 			barbarian.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			barbarian.setPrimarySavingThrow(AttributeType.STRENGTH);
 			barbarian.setSecondarySavingThrow(AttributeType.CONSTITUTION);
-			List<EquipmentType> list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield);
+			ArrayList<EquipmentType> list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
+			list.addAll(simpleMeleeWeapons);
 			barbarian.setEquipmentProficiencies(list);
 			clazzRepository.save(barbarian);
 
@@ -151,7 +154,7 @@ public class InitDB {
 			bard.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			bard.setPrimarySavingThrow(AttributeType.DEXTERITY);
 			bard.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand, EquipmentType.Longsword, EquipmentType.Rapier, EquipmentType.Shortsword);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand, EquipmentType.Longsword, EquipmentType.Rapier, EquipmentType.Shortsword));
 			list.addAll(simpleMeleeWeapons);
 			bard.setEquipmentProficiencies(list);
 			clazzRepository.save(bard);
@@ -166,7 +169,7 @@ public class InitDB {
 			cleric.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			cleric.setPrimarySavingThrow(AttributeType.WISDOM);
 			cleric.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
 			list.addAll(simpleMeleeWeapons);
 			cleric.setEquipmentProficiencies(list);
 			clazzRepository.save(cleric);
@@ -181,7 +184,7 @@ public class InitDB {
 			druid.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			druid.setPrimarySavingThrow(AttributeType.INTELLIGENCE);
 			druid.setSecondarySavingThrow(AttributeType.WISDOM);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield, EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Javelin, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Scimitar, EquipmentType.Sickle, EquipmentType.Sling, EquipmentType.Spear);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield, EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Javelin, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Scimitar, EquipmentType.Sickle, EquipmentType.Sling, EquipmentType.Spear));
 			druid.setEquipmentProficiencies(list);
 			clazzRepository.save(druid);
 
@@ -195,7 +198,7 @@ public class InitDB {
 			fighter.setSecondaryAttribute(AttributeType.DEXTERITY);
 			fighter.setPrimarySavingThrow(AttributeType.STRENGTH);
 			fighter.setSecondarySavingThrow(AttributeType.CONSTITUTION);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.HeavyArmor, EquipmentType.Shield);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.HeavyArmor, EquipmentType.Shield));
 			list.addAll(martialMeleeWeapons);
 			list.addAll(martialRangedWeapons);
 			fighter.setEquipmentProficiencies(list);
@@ -211,7 +214,7 @@ public class InitDB {
 			monk.setSecondaryAttribute(AttributeType.WISDOM);
 			monk.setPrimarySavingThrow(AttributeType.STRENGTH);
 			monk.setSecondarySavingThrow(AttributeType.DEXTERITY);
-			list = Arrays.asList(EquipmentType.Shortsword);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.Shortsword));
 			list.addAll(simpleMeleeWeapons);
 			monk.setEquipmentProficiencies(list);
 			clazzRepository.save(monk);
@@ -226,7 +229,7 @@ public class InitDB {
 			paladin.setSecondaryAttribute(AttributeType.CHARISMA);
 			paladin.setPrimarySavingThrow(AttributeType.WISDOM);
 			paladin.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.HeavyArmor, EquipmentType.Shield);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.HeavyArmor, EquipmentType.Shield));
 			list.addAll(martialMeleeWeapons);
 			paladin.setEquipmentProficiencies(list);
 			clazzRepository.save(paladin);
@@ -241,7 +244,7 @@ public class InitDB {
 			ranger.setSecondaryAttribute(AttributeType.WISDOM);
 			ranger.setPrimarySavingThrow(AttributeType.STRENGTH);
 			ranger.setSecondarySavingThrow(AttributeType.DEXTERITY);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
 			list.addAll(simpleMeleeWeapons);
 			list.addAll(simpleRangedWeapons);
 			ranger.setEquipmentProficiencies(list);
@@ -257,7 +260,7 @@ public class InitDB {
 			rogue.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			rogue.setPrimarySavingThrow(AttributeType.DEXTERITY);
 			rogue.setSecondarySavingThrow(AttributeType.INTELLIGENCE);
-			list = Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand, EquipmentType.Rapier, EquipmentType.Shortsword);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand, EquipmentType.Rapier, EquipmentType.Shortsword));
 			list.addAll(simpleMeleeWeapons);
 			rogue.setEquipmentProficiencies(list);
 			clazzRepository.save(rogue);
@@ -272,7 +275,7 @@ public class InitDB {
 			sorcerer.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			sorcerer.setPrimarySavingThrow(AttributeType.CONSTITUTION);
 			sorcerer.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling, EquipmentType.Quarterstaff, EquipmentType.CrossbowLight);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling, EquipmentType.Quarterstaff, EquipmentType.CrossbowLight));
 			sorcerer.setEquipmentProficiencies(list);
 			clazzRepository.save(sorcerer);
 
@@ -286,7 +289,7 @@ public class InitDB {
 			warlock.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			warlock.setPrimarySavingThrow(AttributeType.WISDOM);
 			warlock.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = Arrays.asList(EquipmentType.LightArmor);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor));
 			list.addAll(simpleMeleeWeapons);
 			list.addAll(simpleRangedWeapons);
 			warlock.setEquipmentProficiencies(list);
@@ -302,7 +305,7 @@ public class InitDB {
 			wizard.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			wizard.setPrimarySavingThrow(AttributeType.INTELLIGENCE);
 			wizard.setSecondarySavingThrow(AttributeType.WISDOM);
-			list = Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling, EquipmentType.Quarterstaff, EquipmentType.CrossbowLight);
+			list = new ArrayList<>(Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling, EquipmentType.Quarterstaff, EquipmentType.CrossbowLight));
 			wizard.setEquipmentProficiencies(list);
 			clazzRepository.save(wizard);
 		}	
