@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head th:include="fragments/header :: head">
+</head>
+
+<body>
+	<div th:include="fragments/body :: headline"></div>
+	<div class="login-form">
+        <form action="/login" method="post">
+            <div th:if="${loginError}" class="error">
+                <p th:text="${loginError}"></p>
+            </div>
+            <div class="input-group">
+                <input type="text" id="username" name="username" placeholder="Nutzername" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" name="password" placeholder="Passwort" required>
+            </div>
+            <div class="input-group">
+                <button type="submit">Anmelden</button>
+            </div>
+            <div class="links">
+                <a href="#">Passwort vergessen?</a>
+                <hr>
+                <button type="button" onclick="location.href='/register'">Neues Konto erstellen</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

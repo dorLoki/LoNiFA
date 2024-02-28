@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import de.lonifa.user.domain.UserRepository;
 import de.lonifa.security.InitDB;
 
 @SpringBootApplication
@@ -18,9 +17,9 @@ public class LoNiFaApplication {
 	}
 
 	@Bean
-	CommandLineRunner init(UserRepository userRepository) {
+	CommandLineRunner init() {
 		return (args) -> {
-			new InitDB().init(userRepository);
+			new InitDB().init();
 		};
 	}
 }

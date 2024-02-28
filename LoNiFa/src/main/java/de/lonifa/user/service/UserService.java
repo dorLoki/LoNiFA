@@ -49,4 +49,11 @@ public interface UserService {
 	 *         Login-Namen gefunden wurde.
 	 */
 	User findByLoginName(@NonNull String name);
+
+	/**
+	 * Registriert einen neuen User.
+	 *
+	 * @param user Der zu registrierende User.
+	 */
+	void registerUser(@NonNull User user) throws IllegalArgumentException;
 }

@@ -37,7 +37,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 				.antMatchers("/palworld/**", "js/palworld.js").hasAnyRole("MOD_PALWORLD", "ADMIN").antMatchers("/minecraft/**", "/js/minecraft.js")
 				.hasAnyRole("MOD_MINECRAFT", "ADMIN").antMatchers("/profile").hasRole("USER") // Nur USER-Rolle
 				.antMatchers("/**").permitAll() // Alles andere ohne Rolle
-				.anyRequest().authenticated().and().formLogin().defaultSuccessUrl("/", true).permitAll().and().logout()
+				.anyRequest().authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll().and().logout()
 				.permitAll();
 	}
 
