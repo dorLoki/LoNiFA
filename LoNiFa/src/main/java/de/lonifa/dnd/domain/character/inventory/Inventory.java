@@ -7,6 +7,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import de.lonifa.common.BaseEntity;
 import de.lonifa.dnd.domain.character.PlayerCharacter;
@@ -14,11 +18,16 @@ import de.lonifa.dnd.domain.character.item.InventoryItem;
 
 @Entity
 public class Inventory extends BaseEntity{
-    @OneToOne
-    private PlayerCharacter character;
 
+    @NotNull
+    @OneToOne
+    private PlayerCharacter playerCharacter;
+
+    @NotNull
+    @Size(min=0, max=15)
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InventoryItem> items = new ArrayList<>(15);
+
 
     @OneToOne
     private InventoryItem head;
@@ -38,6 +47,8 @@ public class Inventory extends BaseEntity{
     @OneToOne
     private InventoryItem weaponSecondary;
 
+    @Min(0)
+    @Max(999999)
     private int gold;
 
     // default constructor
@@ -46,11 +57,11 @@ public class Inventory extends BaseEntity{
 
     // getter setter
     public PlayerCharacter getCharacter() {
-        return character;
+        return playerCharacter;
     }
 
-    public void setPlayerCharacter(PlayerCharacter character) {
-        this.character = character;
+    public void setPlayerCharacter(PlayerCharacter playerCharacter) {
+        this.playerCharacter = playerCharacter;
     }
 
     public List<InventoryItem> getItems() {

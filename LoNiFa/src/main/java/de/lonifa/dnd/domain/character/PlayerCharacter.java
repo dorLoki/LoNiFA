@@ -1,40 +1,81 @@
 package de.lonifa.dnd.domain.character;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import de.lonifa.common.BaseEntity;
-import de.lonifa.dnd.domain.attribute.Attribute;
+import de.lonifa.dnd.domain.character.attribute.DnDAttribute;
 import de.lonifa.dnd.domain.character.clazz.ClazzType;
 import de.lonifa.dnd.domain.character.inventory.Inventory;
 import de.lonifa.dnd.domain.character.race.RaceType;
+import de.lonifa.dnd.domain.character.skill.PlayerSkillSlot;
+import de.lonifa.dnd.domain.character.skill.Skill;
 
 @Entity
 public class PlayerCharacter extends BaseEntity {
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 50)
+    @Column(length = 50)
     private String name;
-    @Embedded
-    private Attribute rolledAttribute;
 
+    @Valid
+    @NotNull
+    @Embedded
+    private DnDAttribute rolledAttribute;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private RaceType raceType;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private ClazzType clazzType;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     private Inventory inventory;
 
+    @Min(1)
+    @Max(9999)
     private int maxHitPoints;
+
+    @Min(0)
+    @Max(9999)
     private int currentHitPoints;
 
+    @Min(0)
+    @Max(999999)
     private int xp;
+
+    @Min(1)
+    @Max(20)
     private int level;
 
     private boolean isDead;
+
+    @NotNull
+    @ManyToMany
+    private List<Skill> skills;
+
+    @NotNull
+    @ManyToMany
+    private List<PlayerSkillSlot> skillSlots;
+    
 
     // construtor
     public PlayerCharacter() {
@@ -51,11 +92,11 @@ public class PlayerCharacter extends BaseEntity {
         this.name = name;
     }
 
-    public Attribute getRolledAttribute() {
+    public DnDAttribute getRolledAttribute() {
         return rolledAttribute;
     }
 
-    public void setRolledAttribute(Attribute rolledAttribute) {
+    public void setRolledAttribute(DnDAttribute rolledAttribute) {
         this.rolledAttribute = rolledAttribute;
     }
 
@@ -121,5 +162,21 @@ public class PlayerCharacter extends BaseEntity {
 
     public void setDead(boolean isDead) {
         this.isDead = isDead;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
+    }
+
+    public List<PlayerSkillSlot> getSkillSlots() {
+        return skillSlots;
+    }
+
+    public void setSkillSlots(List<PlayerSkillSlot> skillSlots) {
+        this.skillSlots = skillSlots;
     }
 }

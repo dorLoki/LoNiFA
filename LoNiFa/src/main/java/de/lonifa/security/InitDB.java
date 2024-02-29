@@ -7,8 +7,8 @@ import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import de.lonifa.dnd.domain.attribute.Attribute;
-import de.lonifa.dnd.domain.attribute.AttributeType;
+import de.lonifa.dnd.domain.character.attribute.DnDAttribute;
+import de.lonifa.dnd.domain.character.attribute.AttributeType;
 import de.lonifa.dnd.domain.character.clazz.Clazz;
 import de.lonifa.dnd.domain.character.clazz.ClazzRepository;
 import de.lonifa.dnd.domain.character.clazz.ClazzType;
@@ -52,7 +52,7 @@ public class InitDB {
 			dwarf.setDisplayName("Zwerg");
 			dwarf.setDescription(
 					"Die kühnen und widerstandsfähigen Zwerge sind als geschickte Krieger, Bergleute und Arbeiter von Stein und Metall bekannt. Obwohl sie deutlich unter 5 Fuß groß sind, sind Zwerge so breit und kompakt, dass sie so viel wiegen können wie ein Mensch, der fast zwei Fuß größer ist. Auch ihr Mut und ihre Ausdauer können es leicht mit jedem größeren Volk aufnehmen. Die Hautfarbe der Zwerge reicht von tiefbraun bis zu einem blassen, rötlich gefärbten Farbton, doch am häufigsten sind hellbraune oder tiefbraune Farbtöne, die an bestimmte Erdtöne erinnern. Ihr langes, aber schlichtes Haar ist in der Regel schwarz, grau oder braun, obwohl hellere Zwerge oft rote Haare haben. Männliche Zwerge legen großen Wert auf ihre Bärte und pflegen sie sorgfältig.");
-			dwarf.setAttribute(new Attribute(2, 1, 2, 0, 0, 0));
+			dwarf.setAttribute(new DnDAttribute(2, 1, 2, 0, 0, 0));
 			raceRepository.save(dwarf);
 			// elf
 			Race elf = new Race();
@@ -60,7 +60,7 @@ public class InitDB {
 			elf.setDisplayName("Elf");
 			elf.setDescription(
 					"Elfen sind ein magisches Volk von jenseitiger Anmut, das in der Welt lebt, aber nicht ganz Teil von ihr ist. Sie leben an Orten von ätherischer Schönheit, inmitten uralter Wälder oder in silbrig schimmernden Türmen, wo sanfte Musik durch die Luft weht und zarte Düfte in der Brise wehen. Elfen lieben die Natur und die Magie, die Kunst und das Kunsthandwerk, die Musik und die Poesie sowie die guten Dinge der Welt.");
-			elf.setAttribute(new Attribute(0, 2, 0, 1, 1, 1));
+			elf.setAttribute(new DnDAttribute(0, 2, 0, 1, 1, 1));
 			raceRepository.save(elf);
 			// human
 			Race human = new Race();
@@ -68,7 +68,7 @@ public class InitDB {
 			human.setDisplayName("Mensch");
 			human.setDescription(
 					"In den Berechnungen der meisten Welten sind die Menschen die jüngste der gewöhnlichen Rassen, die erst spät auf der Weltbühne erscheinen und im Vergleich zu Zwergen, Elfen und Drachen kurzlebig sind. Vielleicht liegt es an ihrem kürzeren Leben, dass sie danach streben, in den ihnen gegebenen Jahren so viel wie möglich zu erreichen. Vielleicht haben sie aber auch das Gefühl, dass sie den älteren Völkern etwas beweisen müssen, und bauen deshalb ihre mächtigen Reiche auf der Grundlage von Eroberung und Handel auf. Was auch immer sie antreibt, die Menschen sind die Innovatoren, die Erfinder und die Pioniere der Welten.");
-			human.setAttribute(new Attribute(1, 1, 1, 1, 1, 1));
+			human.setAttribute(new DnDAttribute(1, 1, 1, 1, 1, 1));
 			raceRepository.save(human);
 			// dragon
 			Race dragonborn = new Race();
@@ -76,7 +76,7 @@ public class InitDB {
 			dragonborn.setDisplayName("Drachengeborener");
 			dragonborn.setDescription(
 					"Von Drachen geboren, wie ihr Name verkündet, wandeln die Drachengeborenen stolz durch eine Welt, die sie mit furchtsamem Unverständnis begrüßt. Geformt von drakonischen Göttern oder den Drachen selbst, schlüpften die Drachengeborenen ursprünglich aus Dracheneiern als eine einzigartige Rasse, die die besten Eigenschaften von Drachen und Humanoiden in sich vereint. Einige Drachengeborene sind treue Diener wahrer Drachen, andere bilden die Reihen der Soldaten in großen Kriegen, und wieder andere treiben umher, ohne eine klare Berufung im Leben zu finden.");
-			dragonborn.setAttribute(new Attribute(2, 0, 0, 1, 1, 1));
+			dragonborn.setAttribute(new DnDAttribute(2, 0, 0, 1, 1, 1));
 			raceRepository.save(dragonborn);
 			// half elf
 			Race halfElf = new Race();
@@ -84,7 +84,7 @@ public class InitDB {
 			halfElf.setDisplayName("Halb-Elf");
 			halfElf.setDescription(
 					"Halb-Elfen, die in zwei Welten leben, aber keiner von beiden wirklich angehören, vereinen das, was manche als die besten Eigenschaften ihrer elfischen und menschlichen Eltern bezeichnen: menschliche Neugier, Erfindungsgabe und Ehrgeiz, gemildert durch die feinen Sinne, die Liebe zur Natur und den künstlerischen Geschmack der Elfen. Einige Halb-Elfen leben unter den Menschen, getrennt von ihren emotionalen und physischen Unterschieden, und beobachten, wie Freunde und geliebte Menschen altern, während die Zeit sie kaum berührt. Andere leben bei den Elfen und werden unruhig, wenn sie das Erwachsenenalter in den zeitlosen Elfenreichen erreichen, während ihre Altersgenossen weiterhin als Kinder leben. Viele Halb-Elfen, die sich in keine der beiden Gesellschaften einfügen können, entscheiden sich für ein Leben als einsame Wanderer oder schließen sich mit anderen Außenseitern und Ausgestoßenen dem Leben als Abenteurer an.");
-			halfElf.setAttribute(new Attribute(0, 0, 0, 2, 1, 2));
+			halfElf.setAttribute(new DnDAttribute(0, 0, 0, 2, 1, 2));
 			raceRepository.save(halfElf);
 			// gnome
 			Race gnome = new Race();
@@ -92,7 +92,7 @@ public class InitDB {
 			gnome.setDisplayName("Gnom");
 			gnome.setDescription(
 					"Ein ständiges Brummen und geschäftiges Treiben durchdringt die Verstecke und Viertel, in denen die Zwerge ihre eng verbundenen Gemeinschaften bilden. Lautere Geräusche unterbrechen das Summen: das Knirschen knirschender Zahnräder hier, eine kleine Explosion dort, ein Aufschrei der Überraschung oder des Triumphs und vor allem Lachanfälle. Gnome haben Freude am Leben und genießen jeden Moment des Erfindens, Erforschens, Forschens, Erschaffens und Spielens.");
-			gnome.setAttribute(new Attribute(1, 1, 0, 2, 0, 0));
+			gnome.setAttribute(new DnDAttribute(1, 1, 0, 2, 0, 0));
 			raceRepository.save(gnome);
 			// half orc
 			Race halfOrc = new Race();
@@ -100,7 +100,7 @@ public class InitDB {
 			halfOrc.setDisplayName("Halb-Ork");
 			halfOrc.setDescription(
 					"Ob sie unter der Führung eines mächtigen Hexenmeisters vereint sind oder sich nach jahrelangen Konflikten bis zum Stillstand bekämpft haben, Ork- und Menschengemeinschaften schließen manchmal Bündnisse. Wenn diese Bündnisse durch Heiraten besiegelt werden, werden Halb-Orks geboren. Einige Halb-Orks steigen zu stolzen Anführern von Ork-Gemeinschaften auf. Andere wagen sich in die Welt hinaus, um ihren Wert zu beweisen. Viele von ihnen werden zu Abenteurern und erlangen Größe durch ihre mächtigen Taten.");
-			halfOrc.setAttribute(new Attribute(2, 1, 2, 0, 0, 0));
+			halfOrc.setAttribute(new DnDAttribute(2, 1, 2, 0, 0, 0));
 			raceRepository.save(halfOrc);
 			// tiefl
 			Race tiefling = new Race();
@@ -108,7 +108,7 @@ public class InitDB {
 			tiefling.setDisplayName("Tiefling");
 			tiefling.setDescription(
 					"Auf der Straße angestarrt und getuschelt zu werden, Gewalt und Beleidigungen zu erleiden, Misstrauen und Furcht in jedem Auge zu sehen: das ist das Los der Tieflinge. Und um das Blatt noch zu wenden, wissen die Tieflinge, dass dies darauf zurückzuführen ist, dass ein vor Generationen geschlossener Pakt die Essenz von Asmodeus - dem Oberherrn der Neun Höllen - in ihre Blutlinie einfloss. Ihr Aussehen und ihr Wesen sind nicht ihre Schuld, sondern das Ergebnis einer uralten Sünde, für die sie und ihre Kinder und Kindeskinder immer zur Verantwortung gezogen werden.");
-			tiefling.setAttribute(new Attribute(0, 0, 1, 0, 2, 2));
+			tiefling.setAttribute(new DnDAttribute(0, 0, 1, 0, 2, 2));
 			raceRepository.save(tiefling);
 			// halfl
 			Race halfling = new Race();
@@ -116,7 +116,7 @@ public class InitDB {
 			halfling.setDisplayName("Halbling");
 			halfling.setDescription(
 					"Die Annehmlichkeiten eines Zuhauses sind das Ziel der meisten Halblinge: ein Ort, an dem sie sich in Ruhe und Frieden niederlassen können, weit weg von plündernden Monstern und kämpfenden Armeen; ein loderndes Feuer und eine reichhaltige Mahlzeit; ein gutes Getränk und eine gute Unterhaltung. Einige Halblinge leben in abgelegenen Bauerndörfern, andere bilden nomadische Gruppen, die ständig auf Reisen sind, um die Wunder neuer Länder und Völker zu entdecken, angelockt von der offenen Straße und dem weiten Horizont. Aber auch diese Wanderer lieben Frieden, Essen, Herd und Heimat, auch wenn die Heimat ein Wagen ist, der über eine unbefestigte Straße fährt, oder ein Floß, das flussabwärts treibt.");
-			halfling.setAttribute(new Attribute(2, 2, 0, 1, 0, 0));
+			halfling.setAttribute(new DnDAttribute(2, 2, 0, 1, 0, 0));
 			raceRepository.save(halfling);
 		}
 		if (isInitDnD_clazz) {

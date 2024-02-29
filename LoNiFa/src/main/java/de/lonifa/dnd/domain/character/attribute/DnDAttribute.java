@@ -1,14 +1,31 @@
-package de.lonifa.dnd.domain.attribute;
+package de.lonifa.dnd.domain.character.attribute;
 
-public class Attribute {
+import javax.persistence.Embeddable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
+@Embeddable
+public class DnDAttribute {
+    @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
+    @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int strength;
+    @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
+    @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int dexterity;
+    @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
+    @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int constitution;
+    @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
+    @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int intelligence;
+    @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
+    @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int wisdom;
+    @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
+    @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int charisma;
 
-    public Attribute(int str, int dex, int con, int intl, int wis, int cha) {
+    public DnDAttribute(int str, int dex, int con, int intl, int wis, int cha) {
         this.strength = str;
         this.dexterity = dex;
         this.constitution = con;
@@ -16,7 +33,7 @@ public class Attribute {
         this.wisdom = wis;
         this.charisma = cha;
     }
-    public Attribute(){
+    public DnDAttribute(){
         this.strength = 0;
         this.dexterity = 0;
         this.constitution = 0;
@@ -61,6 +78,26 @@ public class Attribute {
     public void setCharisma(int charisma) {
         this.charisma = charisma;
     }
+
+    public int getAttribute(AttributeType type) throws IllegalArgumentException{
+        switch (type){
+            case STRENGTH:
+                return strength;
+            case DEXTERITY:
+                return dexterity;
+            case CONSTITUTION:
+                return constitution;
+            case INTELLIGENCE:
+                return intelligence;
+            case WISDOM:
+                return wisdom;
+            case CHARISMA:
+                return charisma;
+            default:
+                throw new IllegalArgumentException("AttributeType not found");
+        }
+    }
+
     //toString
     @Override
     public String toString() {
