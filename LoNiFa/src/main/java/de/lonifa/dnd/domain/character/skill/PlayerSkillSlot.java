@@ -3,12 +3,14 @@ package de.lonifa.dnd.domain.character.skill;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.lang.Nullable;
 
 import de.lonifa.common.BaseEntity;
+import de.lonifa.dnd.domain.character.PlayerCharacter;
 
 @Entity
 public class PlayerSkillSlot extends BaseEntity {
@@ -20,6 +22,11 @@ public class PlayerSkillSlot extends BaseEntity {
     @Nullable
     @ManyToOne
     private Skill skill;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "playerCharacter_id", referencedColumnName = "id")
+    private PlayerCharacter playerCharacter;
 
     // default constructor
     public PlayerSkillSlot() {
@@ -52,5 +59,13 @@ public class PlayerSkillSlot extends BaseEntity {
 
     public void resetSkill() {
         skill = null;
+    }
+
+    public PlayerCharacter getCharacter() {
+        return playerCharacter;
+    }
+
+    public void setCharacter(PlayerCharacter playerCharacter) {
+        this.playerCharacter = playerCharacter;
     }
 }

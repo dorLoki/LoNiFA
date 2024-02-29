@@ -3,7 +3,6 @@ package de.lonifa.dnd.domain.character.item;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -19,11 +18,11 @@ public class InventoryItem extends BaseEntity{
 
     @NotNull
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
 

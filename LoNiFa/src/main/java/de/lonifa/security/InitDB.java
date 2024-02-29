@@ -3,19 +3,35 @@ package de.lonifa.security;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.lonifa.dnd.domain.character.attribute.DnDAttribute;
+import de.lonifa.dnd.domain.character.PlayerCharacter;
+import de.lonifa.dnd.domain.character.PlayerCharacterRepository;
 import de.lonifa.dnd.domain.character.attribute.AttributeType;
 import de.lonifa.dnd.domain.character.clazz.Clazz;
 import de.lonifa.dnd.domain.character.clazz.ClazzRepository;
 import de.lonifa.dnd.domain.character.clazz.ClazzType;
+import de.lonifa.dnd.domain.character.inventory.Inventory;
 import de.lonifa.dnd.domain.character.item.EquipmentType;
+import de.lonifa.dnd.domain.character.item.InventoryItem;
+import de.lonifa.dnd.domain.character.item.Item;
+import de.lonifa.dnd.domain.character.item.ItemRepository;
 import de.lonifa.dnd.domain.character.race.Race;
 import de.lonifa.dnd.domain.character.race.RaceRepository;
 import de.lonifa.dnd.domain.character.race.RaceType;
+import de.lonifa.dnd.domain.character.skill.PlayerSkillSlot;
+import de.lonifa.dnd.domain.character.skill.PlayerSkillSlotRepository;
+import de.lonifa.dnd.domain.character.skill.Skill;
+import de.lonifa.dnd.domain.character.skill.SkillElement;
+import de.lonifa.dnd.domain.character.skill.SkillRepository;
+import de.lonifa.dnd.domain.character.skill.SkillSlot;
+import de.lonifa.dnd.domain.enemy.Enemy;
+import de.lonifa.dnd.domain.enemy.EnemyRepository;
 import de.lonifa.user.domain.User;
 import de.lonifa.user.domain.UserRepository;
 
@@ -24,14 +40,37 @@ public class InitDB {
 	private boolean debug = true;
 	private boolean isInitDnD_Race = true;
 	private boolean isInitDnD_clazz = true;
+	private boolean isInitDnD_item = true;
+	private boolean isInitDnD_skill = true;
+	private boolean isInitDnD_character = true;
+	private boolean isInitDnD_enemy = true;
+
 	@Autowired
 	private UserRepository userRepository;
+
 	@Autowired
 	private RaceRepository raceRepository;
+
 	@Autowired
 	private ClazzRepository clazzRepository;
 
+	@Autowired
+	private ItemRepository itemRepository;
+
+	@Autowired
+	private PlayerCharacterRepository playerCharacterRepository;
+
+	@Autowired
+	private SkillRepository skillRepository;
+
+	@Autowired
+	private PlayerSkillSlotRepository playerSkillSlotRepository;
+
+	@Autowired
+	private EnemyRepository enemyRepository;
+
 	@SuppressWarnings("null")
+	@Transactional
 	public void init() {
 		if (debug) {
 			User Luke = new User("Luke", "luke", "MLtQ_FYsXwnk1U?mP^,n", new HashSet<UserRole>(
@@ -45,6 +84,7 @@ public class InitDB {
 			User system = new User("System", "system", "fez*Lm1R@0?,1=~f>0ye", null);
 			userRepository.saveAll(Arrays.asList(Luke, Niklas, mod_minecraft, mod_palworld, system));
 		}
+
 		if (isInitDnD_Race) {
 			// dwarf
 			Race dwarf = new Race();
@@ -119,16 +159,27 @@ public class InitDB {
 			halfling.setAttribute(new DnDAttribute(2, 2, 0, 1, 0, 0));
 			raceRepository.save(halfling);
 		}
+
 		if (isInitDnD_clazz) {
-			//simple melee weapons list
-			ArrayList<EquipmentType> simpleMeleeWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Greatclub, EquipmentType.Handaxe, EquipmentType.Javelin, EquipmentType.LightHammer, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Sickle, EquipmentType.Spear));
-			//simple ranged weapons list
-			ArrayList<EquipmentType> simpleRangedWeapons = new ArrayList<>(Arrays.asList(EquipmentType.CrossbowLight, EquipmentType.Dart, EquipmentType.Shortbow, EquipmentType.Sling));
-			//martial melee weapons list
-			ArrayList<EquipmentType> martialMeleeWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Battleaxe, EquipmentType.Flail, EquipmentType.Glaive, EquipmentType.Greataxe, EquipmentType.Greatsword, EquipmentType.Halberd, EquipmentType.Lance, EquipmentType.Longsword, EquipmentType.Maul, EquipmentType.Morningstar, EquipmentType.Pike, EquipmentType.Rapier, EquipmentType.Scimitar, EquipmentType.Shortsword, EquipmentType.Trident, EquipmentType.WarPick, EquipmentType.Warhammer, EquipmentType.Whip));
-			//martial ranged weapons list
-			ArrayList<EquipmentType> martialRangedWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Blowgun, EquipmentType.CrossbowHand, EquipmentType.CrossbowHeavy, EquipmentType.Longbow, EquipmentType.Net));
-			//Barbarian
+			// simple melee weapons list
+			ArrayList<EquipmentType> simpleMeleeWeapons = new ArrayList<>(
+					Arrays.asList(EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Greatclub,
+							EquipmentType.Handaxe, EquipmentType.Javelin, EquipmentType.LightHammer, EquipmentType.Mace,
+							EquipmentType.Quarterstaff, EquipmentType.Sickle, EquipmentType.Spear));
+			// simple ranged weapons list
+			ArrayList<EquipmentType> simpleRangedWeapons = new ArrayList<>(Arrays.asList(EquipmentType.CrossbowLight,
+					EquipmentType.Dart, EquipmentType.Shortbow, EquipmentType.Sling));
+			// martial melee weapons list
+			ArrayList<EquipmentType> martialMeleeWeapons = new ArrayList<>(
+					Arrays.asList(EquipmentType.Battleaxe, EquipmentType.Flail, EquipmentType.Glaive,
+							EquipmentType.Greataxe, EquipmentType.Greatsword, EquipmentType.Halberd,
+							EquipmentType.Lance, EquipmentType.Longsword, EquipmentType.Maul, EquipmentType.Morningstar,
+							EquipmentType.Pike, EquipmentType.Rapier, EquipmentType.Scimitar, EquipmentType.Shortsword,
+							EquipmentType.Trident, EquipmentType.WarPick, EquipmentType.Warhammer, EquipmentType.Whip));
+			// martial ranged weapons list
+			ArrayList<EquipmentType> martialRangedWeapons = new ArrayList<>(Arrays.asList(EquipmentType.Blowgun,
+					EquipmentType.CrossbowHand, EquipmentType.CrossbowHeavy, EquipmentType.Longbow, EquipmentType.Net));
+			// Barbarian
 			Clazz barbarian = new Clazz();
 			barbarian.setClassType(ClazzType.BARBARIAN);
 			barbarian.setDisplayName("Barbar");
@@ -139,12 +190,13 @@ public class InitDB {
 			barbarian.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			barbarian.setPrimarySavingThrow(AttributeType.STRENGTH);
 			barbarian.setSecondarySavingThrow(AttributeType.CONSTITUTION);
-			ArrayList<EquipmentType> list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
+			ArrayList<EquipmentType> list = new ArrayList<>(
+					Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
 			list.addAll(simpleMeleeWeapons);
 			barbarian.setEquipmentProficiencies(list);
 			clazzRepository.save(barbarian);
 
-			//Bard
+			// Bard
 			Clazz bard = new Clazz();
 			bard.setClassType(ClazzType.BARD);
 			bard.setDisplayName("Barde");
@@ -154,61 +206,71 @@ public class InitDB {
 			bard.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			bard.setPrimarySavingThrow(AttributeType.DEXTERITY);
 			bard.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand, EquipmentType.Longsword, EquipmentType.Rapier, EquipmentType.Shortsword));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand,
+					EquipmentType.Longsword, EquipmentType.Rapier, EquipmentType.Shortsword));
 			list.addAll(simpleMeleeWeapons);
 			bard.setEquipmentProficiencies(list);
 			clazzRepository.save(bard);
 
-			//Cleric
+			// Cleric
 			Clazz cleric = new Clazz();
 			cleric.setClassType(ClazzType.CLERIC);
 			cleric.setDisplayName("Kleriker");
-			cleric.setDescription("Ein priesterlicher Champion, der im Dienste einer höheren Macht göttliche Magie ausübt.");
+			cleric.setDescription(
+					"Ein priesterlicher Champion, der im Dienste einer höheren Macht göttliche Magie ausübt.");
 			cleric.setHitDie(8);
 			cleric.setPrimaryAttribute(AttributeType.WISDOM);
 			cleric.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			cleric.setPrimarySavingThrow(AttributeType.WISDOM);
 			cleric.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
+			list = new ArrayList<>(
+					Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
 			list.addAll(simpleMeleeWeapons);
 			cleric.setEquipmentProficiencies(list);
 			clazzRepository.save(cleric);
 
-			//Druid
+			// Druid
 			Clazz druid = new Clazz();
 			druid.setClassType(ClazzType.DRUID);
 			druid.setDisplayName("Druide");
-			druid.setDescription("Ein Priester des Alten Glaubens, der über die Kräfte der Natur - Mondlicht und Pflanzenwachstum, Feuer und Blitze - verfügt und Tiergestalten annimmt.");
+			druid.setDescription(
+					"Ein Priester des Alten Glaubens, der über die Kräfte der Natur - Mondlicht und Pflanzenwachstum, Feuer und Blitze - verfügt und Tiergestalten annimmt.");
 			druid.setHitDie(8);
 			druid.setPrimaryAttribute(AttributeType.WISDOM);
 			druid.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			druid.setPrimarySavingThrow(AttributeType.INTELLIGENCE);
 			druid.setSecondarySavingThrow(AttributeType.WISDOM);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield, EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Javelin, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Scimitar, EquipmentType.Sickle, EquipmentType.Sling, EquipmentType.Spear));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor,
+					EquipmentType.Shield, EquipmentType.Club, EquipmentType.Dagger, EquipmentType.Dart,
+					EquipmentType.Javelin, EquipmentType.Mace, EquipmentType.Quarterstaff, EquipmentType.Scimitar,
+					EquipmentType.Sickle, EquipmentType.Sling, EquipmentType.Spear));
 			druid.setEquipmentProficiencies(list);
 			clazzRepository.save(druid);
 
-			//Fighter
+			// Fighter
 			Clazz fighter = new Clazz();
 			fighter.setClassType(ClazzType.FIGHTER);
 			fighter.setDisplayName("Kämpfer");
-			fighter.setDescription("Ein Meister des Kampfes, der mit einer Vielzahl von Waffen und Rüstungen umgehen kann.");
+			fighter.setDescription(
+					"Ein Meister des Kampfes, der mit einer Vielzahl von Waffen und Rüstungen umgehen kann.");
 			fighter.setHitDie(10);
 			fighter.setPrimaryAttribute(AttributeType.STRENGTH);
 			fighter.setSecondaryAttribute(AttributeType.DEXTERITY);
 			fighter.setPrimarySavingThrow(AttributeType.STRENGTH);
 			fighter.setSecondarySavingThrow(AttributeType.CONSTITUTION);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.HeavyArmor, EquipmentType.Shield));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor,
+					EquipmentType.HeavyArmor, EquipmentType.Shield));
 			list.addAll(martialMeleeWeapons);
 			list.addAll(martialRangedWeapons);
 			fighter.setEquipmentProficiencies(list);
 			clazzRepository.save(fighter);
 
-			//Monk
+			// Monk
 			Clazz monk = new Clazz();
 			monk.setClassType(ClazzType.MONK);
 			monk.setDisplayName("Mönch");
-			monk.setDescription("Ein Meister der Kampfkünste, der sich die Kraft des Körpers zunutze macht, um körperliche und geistige Perfektion zu erreichen.");
+			monk.setDescription(
+					"Ein Meister der Kampfkünste, der sich die Kraft des Körpers zunutze macht, um körperliche und geistige Perfektion zu erreichen.");
 			monk.setHitDie(8);
 			monk.setPrimaryAttribute(AttributeType.DEXTERITY);
 			monk.setSecondaryAttribute(AttributeType.WISDOM);
@@ -219,7 +281,7 @@ public class InitDB {
 			monk.setEquipmentProficiencies(list);
 			clazzRepository.save(monk);
 
-			//Paladin
+			// Paladin
 			Clazz paladin = new Clazz();
 			paladin.setClassType(ClazzType.PALADIN);
 			paladin.setDisplayName("Paladin");
@@ -229,28 +291,31 @@ public class InitDB {
 			paladin.setSecondaryAttribute(AttributeType.CHARISMA);
 			paladin.setPrimarySavingThrow(AttributeType.WISDOM);
 			paladin.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.HeavyArmor, EquipmentType.Shield));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor,
+					EquipmentType.HeavyArmor, EquipmentType.Shield));
 			list.addAll(martialMeleeWeapons);
 			paladin.setEquipmentProficiencies(list);
 			clazzRepository.save(paladin);
 
-			//Ranger
+			// Ranger
 			Clazz ranger = new Clazz();
 			ranger.setClassType(ClazzType.RANGER);
 			ranger.setDisplayName("Waldläufer");
-			ranger.setDescription("Ein Krieger, der Kampfkraft und Naturmagie einsetzt, um Bedrohungen am Rande der Zivilisation zu bekämpfen.");
+			ranger.setDescription(
+					"Ein Krieger, der Kampfkraft und Naturmagie einsetzt, um Bedrohungen am Rande der Zivilisation zu bekämpfen.");
 			ranger.setHitDie(10);
 			ranger.setPrimaryAttribute(AttributeType.DEXTERITY);
 			ranger.setSecondaryAttribute(AttributeType.WISDOM);
 			ranger.setPrimarySavingThrow(AttributeType.STRENGTH);
 			ranger.setSecondarySavingThrow(AttributeType.DEXTERITY);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
+			list = new ArrayList<>(
+					Arrays.asList(EquipmentType.LightArmor, EquipmentType.MediumArmor, EquipmentType.Shield));
 			list.addAll(simpleMeleeWeapons);
 			list.addAll(simpleRangedWeapons);
 			ranger.setEquipmentProficiencies(list);
 			clazzRepository.save(ranger);
 
-			//Rogue
+			// Rogue
 			Clazz rogue = new Clazz();
 			rogue.setClassType(ClazzType.ROGUE);
 			rogue.setDisplayName("Schurke");
@@ -260,12 +325,13 @@ public class InitDB {
 			rogue.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			rogue.setPrimarySavingThrow(AttributeType.DEXTERITY);
 			rogue.setSecondarySavingThrow(AttributeType.INTELLIGENCE);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand, EquipmentType.Rapier, EquipmentType.Shortsword));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.LightArmor, EquipmentType.CrossbowHand,
+					EquipmentType.Rapier, EquipmentType.Shortsword));
 			list.addAll(simpleMeleeWeapons);
 			rogue.setEquipmentProficiencies(list);
 			clazzRepository.save(rogue);
 
-			//Sorcerer
+			// Sorcerer
 			Clazz sorcerer = new Clazz();
 			sorcerer.setClassType(ClazzType.SORCERER);
 			sorcerer.setDisplayName("Zauberer");
@@ -275,15 +341,17 @@ public class InitDB {
 			sorcerer.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			sorcerer.setPrimarySavingThrow(AttributeType.CONSTITUTION);
 			sorcerer.setSecondarySavingThrow(AttributeType.CHARISMA);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling, EquipmentType.Quarterstaff, EquipmentType.CrossbowLight));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling,
+					EquipmentType.Quarterstaff, EquipmentType.CrossbowLight));
 			sorcerer.setEquipmentProficiencies(list);
 			clazzRepository.save(sorcerer);
 
-			//Warlock
+			// Warlock
 			Clazz warlock = new Clazz();
 			warlock.setClassType(ClazzType.WARLOCK);
 			warlock.setDisplayName("Paktmagier");
-			warlock.setDescription("Ein Träger von Magie, die aus einer Abmachung mit einem außerplanmäßigen Wesen stammt.");
+			warlock.setDescription(
+					"Ein Träger von Magie, die aus einer Abmachung mit einem außerplanmäßigen Wesen stammt.");
 			warlock.setHitDie(8);
 			warlock.setPrimaryAttribute(AttributeType.CHARISMA);
 			warlock.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
@@ -295,7 +363,7 @@ public class InitDB {
 			warlock.setEquipmentProficiencies(list);
 			clazzRepository.save(warlock);
 
-			//Wizard
+			// Wizard
 			Clazz wizard = new Clazz();
 			wizard.setClassType(ClazzType.WIZARD);
 			wizard.setDisplayName("Zauberer");
@@ -305,9 +373,137 @@ public class InitDB {
 			wizard.setSecondaryAttribute(AttributeType.NULL_ATTRIBUTE);
 			wizard.setPrimarySavingThrow(AttributeType.INTELLIGENCE);
 			wizard.setSecondarySavingThrow(AttributeType.WISDOM);
-			list = new ArrayList<>(Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling, EquipmentType.Quarterstaff, EquipmentType.CrossbowLight));
+			list = new ArrayList<>(Arrays.asList(EquipmentType.Dagger, EquipmentType.Dart, EquipmentType.Sling,
+					EquipmentType.Quarterstaff, EquipmentType.CrossbowLight));
 			wizard.setEquipmentProficiencies(list);
 			clazzRepository.save(wizard);
-		}	
+		}
+
+		if (isInitDnD_item) {
+			Item item = new Item();
+			item.setName("Schwert");
+			item.setDescription(
+					"Ein Schwert ist eine zweischneidige Waffe, die in der Regel von einem oder zwei Händen geführt wird.");
+			item.setWeight(1);
+			item.setValue(15);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Longsword);
+			item.setDnDAttribute(new DnDAttribute(2, 1, 0, 0, 0, 0));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Eisenrüstung");
+			item.setDescription("Eine Rüstung aus Eisen, die den Träger vor Schaden schützt.");
+			item.setWeight(50);
+			item.setValue(30);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.HeavyArmor);
+			item.setDnDAttribute(new DnDAttribute(0, 3, 0, 0, 0, 1));
+			itemRepository.save(item);
+		}
+
+		if (isInitDnD_skill) {
+			Skill skill = new Skill();
+			skill.setDisplayName("Schwertkampf");
+			skill.setDescription("Der Charakter ist im Umgang mit Schwertern geübt.");
+			skill.setSlot(SkillSlot.NULL_SLOT);
+			skill.setCastingTime(0);
+			skill.setRoll(4);
+			skill.setElement(SkillElement.NULL_ELEMENT);
+			skillRepository.save(skill);
+
+			skill = new Skill();
+			skill.setDisplayName("Feuerball");
+			skill.setDescription("Der Charakter schießt einen Feuerball auf den Gegner. ");
+			skill.setSlot(SkillSlot.T1);
+			skill.setCastingTime(1);
+			skill.setRoll(6);
+			skill.setElement(SkillElement.FIRE);
+			skillRepository.save(skill);
+		}
+
+		if (isInitDnD_character) {
+			// character ----------------------------------------------------------
+			PlayerCharacter playerCharacter = new PlayerCharacter();
+
+			Inventory inventory = new Inventory();
+
+			List<InventoryItem> items = new ArrayList<InventoryItem>();
+			InventoryItem inventoryItem = new InventoryItem();
+			inventoryItem.setAmount(1);
+			inventoryItem.setInventory(inventory);
+			inventoryItem.setItem(itemRepository.findById(1).get());
+			items.add(inventoryItem);
+
+			InventoryItem inventoryItem2 = new InventoryItem();
+			inventoryItem2.setAmount(3);
+			inventoryItem2.setInventory(inventory);
+			inventoryItem2.setItem(itemRepository.findById(2).get());
+			items.add(inventoryItem2);
+
+			List<Skill> skills = new ArrayList<Skill>();
+			skills.add(skillRepository.findById(1).get());
+			skills.add(skillRepository.findById(2).get());
+
+			List<PlayerSkillSlot> skillSlots = new ArrayList<PlayerSkillSlot>();
+			PlayerSkillSlot playerSkillSlot = new PlayerSkillSlot();
+			playerSkillSlot.setSlot(SkillSlot.T1);
+			playerSkillSlot.setSkill(null);
+			playerSkillSlot.setCharacter(playerCharacter);
+
+			playerCharacter.setName("TestCharakter");
+			playerCharacter.setRolledAttribute(new DnDAttribute(10, 10, 10, 10, 10, 10));
+			playerCharacter.setRaceType(RaceType.HUMAN);
+			playerCharacter.setClazzType(ClazzType.BARBARIAN);
+			// set inventory
+			playerCharacter.setInventory(inventory);
+			playerCharacter.setMaxHitPoints(5);
+			playerCharacter.setCurrentHitPoints(5);
+			playerCharacter.setXp(0);
+			playerCharacter.setLevel(1);
+			playerCharacter.setDead(false);
+			// set skills
+			playerCharacter.setSkills(skills);
+			// set skillslots
+			playerCharacter.setSkillSlots(skillSlots);
+			// inv setup
+			inventory.setPlayerCharacter(playerCharacter);
+			inventory.setItems(items);
+			inventory.setGold(0);
+
+			// skillRepository.saveAll(skills);
+
+			User user = userRepository.findByLoginName("luke");
+			playerCharacter.setUser(user);
+			user.addCharacter(playerCharacter);
+
+			playerCharacterRepository.save(playerCharacter);
+			// userRepository.save(user);
+			playerSkillSlotRepository.save(playerSkillSlot);
+		}
+
+		if (isInitDnD_enemy) {
+			// enemy -------------------------------------------------------------
+			Enemy enemy = new Enemy();
+			enemy.setName("TestGegner");
+			enemy.setDescription("Ein Testgegner");
+			enemy.setAttribute(new DnDAttribute(10, 10, 10, 10, 10, 10));
+			enemy.setLoot(null);
+			enemy.setMaxHitPoints(5);
+			enemy.setCurrentHitPoints(5);
+			enemy.setXpDrop(5);
+
+			// skill list
+			List<Skill> skills = new ArrayList<Skill>();
+			skills.add(skillRepository.findById(1).get());
+			enemy.setSkills(skills);
+			enemy.setAC(1);
+			enemyRepository.save(enemy);
+		}
+	
+	User user = userRepository.findByLoginName("luke");
+	user.getCharacters().forEach(c -> System.out.println(c.getName()));
 	}
 }

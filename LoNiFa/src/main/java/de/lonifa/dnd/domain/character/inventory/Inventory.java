@@ -1,6 +1,5 @@
 package de.lonifa.dnd.domain.character.inventory;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,13 +19,13 @@ import de.lonifa.dnd.domain.character.item.InventoryItem;
 public class Inventory extends BaseEntity{
 
     @NotNull
-    @OneToOne
+    @OneToOne(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
     private PlayerCharacter playerCharacter;
 
     @NotNull
     @Size(min=0, max=15)
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<InventoryItem> items = new ArrayList<>(15);
+    private List<InventoryItem> items;
 
 
     @OneToOne

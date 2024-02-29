@@ -1,12 +1,12 @@
 package de.lonifa.dnd.domain.character.skill;
 
 public enum SkillElement {
-    Fire("Feuer"),
-    Water("Wasser"),
-    Earth("Erde"),
-    Air("Luft"),
-    Light("Licht"),
-    Darkness("Dunkelheit"),
+    FIRE("Feuer"),
+    WATER("Wasser"),
+    EARTH("Erde"),
+    AIR("Luft"),
+    LIGHT("Licht"),
+    DARKNESS("Dunkelheit"),
     NULL_ELEMENT("Nichts");
 
     private final String displayName;

@@ -1,9 +1,12 @@
 package de.lonifa.user.domain;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -12,6 +15,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,6 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import de.lonifa.common.BaseEntity;
+import de.lonifa.dnd.domain.character.PlayerCharacter;
 import de.lonifa.security.UserRole;
 
 /**
@@ -46,6 +53,7 @@ public class User extends BaseEntity implements UserDetails {
 		this.setLoginName(loginName);
 		this.setPasswordHash(password);
 		this.setRoles(roles);
+		this.setCharacters(new ArrayList<>());
 	}
 
 	/**
@@ -74,6 +82,11 @@ public class User extends BaseEntity implements UserDetails {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
 	private Set<UserRole> roles = new HashSet<>();
+
+	@NotNull
+	@Size(max=3)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<PlayerCharacter> characters;
 
 	// UserDetails Override
 	@Override
@@ -152,4 +165,15 @@ public class User extends BaseEntity implements UserDetails {
 		this.roles.add(role);
 	}
 
+	public List<PlayerCharacter> getCharacters() {
+		return characters;
+	}
+
+	public void setCharacters(List<PlayerCharacter> characters) {
+		this.characters = characters;
+	}
+
+	public void addCharacter(PlayerCharacter character) {
+		this.characters.add(character);
+	}
 }

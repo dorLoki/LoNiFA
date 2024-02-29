@@ -8,7 +8,10 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -24,6 +27,7 @@ import de.lonifa.dnd.domain.character.inventory.Inventory;
 import de.lonifa.dnd.domain.character.race.RaceType;
 import de.lonifa.dnd.domain.character.skill.PlayerSkillSlot;
 import de.lonifa.dnd.domain.character.skill.Skill;
+import de.lonifa.user.domain.User;
 
 @Entity
 public class PlayerCharacter extends BaseEntity {
@@ -47,7 +51,8 @@ public class PlayerCharacter extends BaseEntity {
     private ClazzType clazzType;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "inventory_id", referencedColumnName = "id")
     private Inventory inventory;
 
     @Min(1)
@@ -73,9 +78,13 @@ public class PlayerCharacter extends BaseEntity {
     private List<Skill> skills;
 
     @NotNull
-    @ManyToMany
+    @OneToMany(mappedBy = "playerCharacter", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PlayerSkillSlot> skillSlots;
-    
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     // construtor
     public PlayerCharacter() {
@@ -178,5 +187,13 @@ public class PlayerCharacter extends BaseEntity {
 
     public void setSkillSlots(List<PlayerSkillSlot> skillSlots) {
         this.skillSlots = skillSlots;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

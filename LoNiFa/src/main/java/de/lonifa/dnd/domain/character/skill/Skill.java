@@ -35,6 +35,10 @@ public class Skill extends BaseEntity {
     @Max(9)
     private int castingTime;
 
+    @Min(0)
+    @Max(999)
+    private int roll;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private SkillElement element;
@@ -84,4 +88,11 @@ public class Skill extends BaseEntity {
         this.element = element;
     }
 
+    public int getRoll() {
+        return roll;
+    }
+
+    public void setRoll(int roll) {
+        this.roll = roll;
+    }
 }
