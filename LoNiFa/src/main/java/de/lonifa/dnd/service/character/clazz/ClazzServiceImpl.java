@@ -39,11 +39,6 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public Optional<Clazz> findByName(@NonNull String name) {
-        return clazzRepository.findByDisplayName(name);
-    }
-
-    @Override
     public void registerClazz(@NonNull Clazz clazz) throws IllegalArgumentException {
         ClazzType clazzType = clazz.getClassType();
         if (clazzType == null || clazzRepository.existsById(clazzType)) {

@@ -1,0 +1,107 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+h2, h3 {
+    color: #444;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.character-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.character-card h2 {
+    border-bottom: 2px solid #eaeaea;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.character-info p, .character-info h3 {
+    margin: 10px 0;
+}
+
+/* Lebensbalken-Styles */
+.health-bar {
+    position: relative;
+    background-color: #eaeaea;
+    border-radius: 4px;
+    padding: 3px;
+    margin-bottom: 10px;
+}
+
+.health-bar-value {
+    background-color: #4CAF50;
+    width: 50%; /* Beispielwert */
+    height: 20px;
+    border-radius: 4px;
+}
+
+.health-bar-value:hover:after {
+    content: attr(data-value);
+    position: absolute;
+    right: 10px;
+    top: 100%;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.inventory {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.inventory-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.inventory-item {
+    text-align: center;
+    padding: 10px;
+    background-color: #fafafa;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+}
+
+.item-name {
+    cursor: pointer;
+}
+
+.item-tooltip {
+    position: absolute;
+    z-index: 1000;
+    border: 1px solid black; /* Schwarze Umrandung */
+    background-color: #f0f0f0; /* Grauer Hintergrund */
+    padding: 10px; /* Etwas Innenabstand hinzufügen */
+    border-radius: 5px; /* Abgerundete Ecken für das Tooltip */
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2); /* Optional: Schatten für das Tooltip hinzufügen */
+    color: #333; /* Textfarbe */
+    font-size: 0.9em; /* Schriftgröße anpassen */
+}
+
+.item-tooltip strong {
+    font-weight: bold;
+}
+
+.item-tooltip span.attribute {
+    color: green;
+}

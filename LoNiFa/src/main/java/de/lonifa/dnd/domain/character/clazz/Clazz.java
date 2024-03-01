@@ -28,12 +28,6 @@ public class Clazz {
 
     @NotNull
     @NotBlank
-    @Size(min=1,max = 100)
-    @Column(length = 100)
-    private String displayName;
-
-    @NotNull
-    @NotBlank
     @Size(min=1,max = 1000)
     @Column(length = 1000)
     private String description;
@@ -78,14 +72,6 @@ public class Clazz {
 
     public void setClassType(ClazzType classType) {
         this.classType = classType;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
     }
 
     public String getDescription() {

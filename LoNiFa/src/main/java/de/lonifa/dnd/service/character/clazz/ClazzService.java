@@ -18,8 +18,6 @@ public interface ClazzService {
 
     void updateClazz(@Valid @NonNull Clazz clazz) throws IllegalArgumentException;
 
-    Optional<Clazz> findByName(@Valid @NonNull String name);
-
     void registerClazz(@Valid @NonNull Clazz clazz) throws IllegalArgumentException;
 
     void deleteClazz(@NonNull ClazzType clazzType);

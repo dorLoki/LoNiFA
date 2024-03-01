@@ -48,7 +48,7 @@ public class Inventory extends BaseEntity{
 
     @Min(0)
     @Max(999999)
-    private int gold;
+    private int gold = 0;
 
     // default constructor
     public Inventory() {
@@ -120,6 +120,7 @@ public class Inventory extends BaseEntity{
     }
 
     public int getGold() {
+        System.out.println(this.gold + " gold");
         return gold;
     }
 

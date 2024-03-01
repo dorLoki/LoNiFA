@@ -4,23 +4,31 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Embeddable
 public class DnDAttribute {
+    @JsonProperty("STR")
     @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
     @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int strength;
+    @JsonProperty("DEX")
     @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
     @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int dexterity;
+    @JsonProperty("CON")
     @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
     @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int constitution;
+    @JsonProperty("INT")
     @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
     @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int intelligence;
+    @JsonProperty("WIS")
     @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
     @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int wisdom;
+    @JsonProperty("CHA")
     @Min(value = 0, message = "Der Wert muss größer oder gleich 0 sein")
     @Max(value = 100, message = "Der Wert darf 100 nicht überschreiten")
     private int charisma;

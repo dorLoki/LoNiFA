@@ -1,10 +1,10 @@
-package de.sachsenCompany;
+package de.lonifa;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SachsenCompanyApplicationTests {
+class LoNiFaApplicationTests {
 
 	@Test
 	void contextLoads() {
