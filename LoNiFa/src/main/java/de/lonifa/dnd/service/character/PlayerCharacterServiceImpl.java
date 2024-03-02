@@ -13,13 +13,20 @@ import org.springframework.stereotype.Service;
 import de.lonifa.dnd.domain.character.PlayerCharacter;
 import de.lonifa.dnd.domain.character.PlayerCharacterRepository;
 import de.lonifa.dnd.domain.character.DTO.CharacterFormDTO;
+import de.lonifa.dnd.domain.character.attribute.DnDAttribute;
+import de.lonifa.dnd.domain.character.clazz.Clazz;
 import de.lonifa.dnd.domain.character.clazz.ClazzType;
 import de.lonifa.dnd.domain.character.inventory.Inventory;
+import de.lonifa.dnd.domain.character.item.EquipmentType;
 import de.lonifa.dnd.domain.character.item.InventoryItem;
+import de.lonifa.dnd.domain.character.item.Item;
+import de.lonifa.dnd.domain.character.race.Race;
+import de.lonifa.dnd.domain.character.race.RaceType;
 import de.lonifa.dnd.domain.character.skill.PlayerSkillSlot;
 import de.lonifa.dnd.domain.character.skill.Skill;
 import de.lonifa.dnd.domain.character.skill.SkillSlot;
 import de.lonifa.dnd.service.character.clazz.ClazzService;
+import de.lonifa.dnd.service.character.race.RaceService;
 import de.lonifa.user.domain.User;
 
 @Service
@@ -29,6 +36,9 @@ public class PlayerCharacterServiceImpl implements PlayerCharacterService {
 
     @Autowired
     private ClazzService clazzService;
+
+    @Autowired
+    private RaceService raceService;
 
     @Override
     public List<PlayerCharacter> getAllPlayerCharacters() {
@@ -140,5 +150,81 @@ public class PlayerCharacterServiceImpl implements PlayerCharacterService {
         skillSlot.setCharacter(playerCharacter);
         skillSlots.add(skillSlot);
         return skillSlots;
+    }
+
+    @Override
+    public Optional<DnDAttribute> getFullAttributes(@NonNull @Valid PlayerCharacter playerCharacter) {
+        DnDAttribute attribute = playerCharacter.getRolledAttribute();
+
+        // race bonus
+        RaceType raceType = playerCharacter.getRaceType();
+        if (raceType == null) {
+            return Optional.empty();
+        }
+        Optional<Race> race = raceService.getRaceByRaceType(raceType);
+        if(race.isEmpty()) {
+            return Optional.empty();
+        }
+        DnDAttribute raceBonus = race.get().getAttribute();
+
+        //update attributes with addional race bonus
+        attribute.setStrength(attribute.getStrength() + raceBonus.getStrength());
+        attribute.setDexterity(attribute.getDexterity() + raceBonus.getDexterity());
+        attribute.setConstitution(attribute.getConstitution() + raceBonus.getConstitution());
+        attribute.setIntelligence(attribute.getIntelligence() + raceBonus.getIntelligence());
+        attribute.setWisdom(attribute.getWisdom() + raceBonus.getWisdom());
+        attribute.setCharisma(attribute.getCharisma() + raceBonus.getCharisma());
+
+
+        // clazz bonus
+        ClazzType clazzType = playerCharacter.getClazzType();
+        if(clazzType == null) {
+            return Optional.empty();
+        }
+
+        Optional<Clazz> clazz = clazzService.getClazzByType(clazzType);
+        if (clazz.isEmpty()) {
+            return Optional.empty();
+        }
+        List<EquipmentType> equipmentProficiencies = clazz.get().getEquipmentProficiencies();
+        if (equipmentProficiencies == null) {
+            return Optional.empty();
+        }
+        
+        Inventory inventory = playerCharacter.getInventory();
+        if (inventory == null) {
+            return Optional.empty();
+        }
+        List<InventoryItem> items = inventory.getItems();
+        if (items == null) {
+            return Optional.empty();
+        }
+        for(InventoryItem iItem : items) {
+
+            if(iItem.getSortIndex()<=15){
+                continue;
+            }
+
+
+            Item item = iItem.getItem();
+            EquipmentType itemType = item.getEquipmentType();
+            DnDAttribute itemBonus = item.getDnDAttribute();
+            if(equipmentProficiencies.contains(itemType)) {
+                attribute.setStrength(attribute.getStrength() + itemBonus.getStrength() * 2);
+                attribute.setDexterity(attribute.getDexterity() + itemBonus.getDexterity() * 2);
+                attribute.setConstitution(attribute.getConstitution() + itemBonus.getConstitution() * 2);
+                attribute.setIntelligence(attribute.getIntelligence() + itemBonus.getIntelligence() * 2);
+                attribute.setWisdom(attribute.getWisdom() + itemBonus.getWisdom() * 2);
+                attribute.setCharisma(attribute.getCharisma() + itemBonus.getCharisma() * 2);
+            } else{
+                attribute.setStrength(attribute.getStrength() + itemBonus.getStrength());
+                attribute.setDexterity(attribute.getDexterity() + itemBonus.getDexterity());
+                attribute.setConstitution(attribute.getConstitution() + itemBonus.getConstitution());
+                attribute.setIntelligence(attribute.getIntelligence() + itemBonus.getIntelligence());
+                attribute.setWisdom(attribute.getWisdom() + itemBonus.getWisdom());
+                attribute.setCharisma(attribute.getCharisma() + itemBonus.getCharisma());
+            }
+        }
+        return Optional.of(attribute);
     }
 }

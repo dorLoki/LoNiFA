@@ -156,15 +156,19 @@ public class InventoryServiceImpl implements InventoryService {
                 }
                 break;
             case 21:
-                if (equipmentType == EquipmentType.Item || equipmentType == EquipmentType.Ring
-                        || equipmentType == EquipmentType.LightHeadArmor
-                        || equipmentType == EquipmentType.MediumHeadArmor
-                        || equipmentType == EquipmentType.HeavyHeadArmor
-                        || equipmentType == EquipmentType.LightArmor || equipmentType == EquipmentType.MediumArmor
-                        || equipmentType == EquipmentType.HeavyArmor) {
+                // offhand
+                if (equipmentType == EquipmentType.Shield || equipmentType == EquipmentType.Club
+                        || equipmentType == EquipmentType.Dagger
+                        || equipmentType == EquipmentType.Handaxe
+                        || equipmentType == EquipmentType.LightHammer
+                        || equipmentType == EquipmentType.Mace
+                        || equipmentType == EquipmentType.Sickle
+                        || equipmentType == EquipmentType.CrossbowLight
+                        || equipmentType == EquipmentType.Shortsword) {
+                    break;
+                } else {
                     throw new IllegalArgumentException("The item is not for the Hand!");
                 }
-                break;
             default:
                 break;
         }

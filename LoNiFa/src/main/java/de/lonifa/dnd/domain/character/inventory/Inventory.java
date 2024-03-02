@@ -24,7 +24,7 @@ public class Inventory extends BaseEntity {
     private PlayerCharacter playerCharacter;
 
     @NotNull
-    @Size(min = 0, max = 15)
+    @Size(min = 0, max = 21)
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<InventoryItem> items;
 

@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 
 import de.lonifa.dnd.domain.character.PlayerCharacter;
 import de.lonifa.dnd.domain.character.DTO.CharacterFormDTO;
+import de.lonifa.dnd.domain.character.attribute.DnDAttribute;
 import de.lonifa.user.domain.User;
 
 public interface PlayerCharacterService {
@@ -25,5 +26,7 @@ public interface PlayerCharacterService {
 
     void deletePlayerCharacter(@NonNull @Valid PlayerCharacter playerCharacter);
 
-    void deleteAllPlayerCharacters();    
+    void deleteAllPlayerCharacters();
+
+    Optional<DnDAttribute> getFullAttributes(@NonNull @Valid PlayerCharacter playerCharacter);    
 }

@@ -12,9 +12,9 @@
 <body>
     <div th:include="fragments/body :: headline"></div>
 
-    <div th:include="fragments/character-fragment :: characterCard(${char1}, ${playerInventory1})"></div>
-    <div th:include="fragments/character-fragment :: characterCard(${char2}, ${playerInventory2})"></div>
-    <div th:include="fragments/character-fragment :: characterCard(${char3}, ${playerInventory3})"></div>
+    <div th:include="fragments/character-fragment :: characterCard(${char1}, ${playerInventory1}, ${playerAttributes1})"></div>
+    <div th:include="fragments/character-fragment :: characterCard(${char2}, ${playerInventory2}, ${playerAttributes2})"></div>
+    <div th:include="fragments/character-fragment :: characterCard(${char3}, ${playerInventory3}, ${playerAttributes3})"></div>
 
     <div id="item-tooltip" class="item-tooltip" style="display: none;">
         <!-- Tooltip-Inhalte werden per AJAX hier eingefügt -->

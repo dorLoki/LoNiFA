@@ -2,6 +2,25 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 
 <body>
+
+    <div th:fragment="charAttributes(attributes)">
+        <div th:if="${attributes}">
+            <h3>Attributes</h3>
+            <div class="attributes">
+                <p th:text="'Stärke: ' + ${attributes.strength}"></p>
+                <p th:text="'Geschicklichkeit: ' + ${attributes.dexterity}"></p>
+                <p th:text="'Konstitution: ' + ${attributes.constitution}"></p>
+                <p th:text="'Intelligenz: ' + ${attributes.intelligence}"></p>
+                <p th:text="'Weisheit: ' + ${attributes.wisdom}"></p>
+                <p th:text="'Charisma: ' + ${attributes.charisma}"></p>
+            </div>
+        </div>
+        <div th:unless="${attributes}">
+            <p>Keine Attribute gefunden</p>
+        </div>
+    </div>
+
+
     <div th:fragment="charSkills(skills)">
         <div class="skills-list">
             <h3>Skills</h3>
@@ -119,9 +138,10 @@
             <h3>Kein Inventory gefunden</h3>
         </div>
     </div>
-    <div th:fragment="characterCard(playercharacter, playerInventory)">
+    <div th:fragment="characterCard(playercharacter, playerInventory, attributes)">
         <div class="character-card">
             <div th:replace="fragments/character-fragment::charBaseData(${playercharacter})"></div>
+            <div th:replace="fragments/character-fragment::charAttributes(${attributes})"></div>
             <div th:if="${playercharacter}">
                 <div th:replace="fragments/character-fragment::charSkills(${playercharacter.skills})"></div>
                 <div th:replace="fragments/character-fragment::charInventory(${playerInventory})"></div>

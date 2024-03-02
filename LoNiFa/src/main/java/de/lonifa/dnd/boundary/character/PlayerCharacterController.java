@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import de.lonifa.dnd.domain.character.PlayerCharacter;
 import de.lonifa.dnd.domain.character.DTO.CharacterFormDTO;
+import de.lonifa.dnd.domain.character.attribute.DnDAttribute;
 import de.lonifa.dnd.domain.character.clazz.ClazzRepository;
 import de.lonifa.dnd.domain.character.race.RaceRepository;
 import de.lonifa.dnd.service.character.PlayerCharacterService;
@@ -59,14 +60,17 @@ public class PlayerCharacterController {
                 model.addAttribute("char3", chars.get(2));
                 model.addAttribute("playerInventory3",
                         inventoryService.createInventoryDTO(chars.get(2).getInventory()));
+                model.addAttribute("playerAttributes3", playerCharacterService.getFullAttributes(chars.get(2)).orElseGet(DnDAttribute::new));
             case 2:
                 model.addAttribute("char2", chars.get(1));
                 model.addAttribute("playerInventory2",
                         inventoryService.createInventoryDTO(chars.get(1).getInventory()));
+                model.addAttribute("playerAttributes2", playerCharacterService.getFullAttributes(chars.get(1)).orElseGet(DnDAttribute::new));
             case 1:
                 model.addAttribute("char1", chars.get(0));
                 model.addAttribute("playerInventory1",
                         inventoryService.createInventoryDTO(chars.get(0).getInventory()));
+                model.addAttribute("playerAttributes1", playerCharacterService.getFullAttributes(chars.get(0)).orElseGet(DnDAttribute::new));
             default:
                 break;
         }
