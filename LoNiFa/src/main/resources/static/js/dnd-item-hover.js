@@ -5,7 +5,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.querySelectorAll('.item-name').forEach(item => {
         item.addEventListener('mouseenter', function (event) {
             const itemId = this.dataset.itemId;
-            if (!itemId) return; // Keine Aktion, wenn keine Item-ID vorhanden ist
+            if (!itemId) {
+                const tooltip = document.getElementById('item-tooltip');
+                tooltip.style.display = 'none';
+                tooltip.innerHTML = null;
+                return;
+            }
             if (tooltipsCache[itemId]) {
                 displayTooltip(tooltipsCache[itemId]);
             } else {
@@ -38,6 +43,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                         return;
                     });
             }
+        
         });
 
         item.addEventListener('mousemove', function (event) {
@@ -45,10 +51,17 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
 
         item.addEventListener('mouseleave', function () {
-            const tooltip = document.getElementById('item-tooltip');
-            tooltip.style.display = 'none';
+            hideTooltip();
+        });
+        item.addEventListener('dragstart', function () {
+            hideTooltip();
         });
     });
+
+    function hideTooltip() {
+        const tooltip = document.getElementById('item-tooltip');
+        tooltip.style.display = 'none';
+    }
 
     function displayTooltip(data) {
         const tooltip = document.getElementById('item-tooltip');

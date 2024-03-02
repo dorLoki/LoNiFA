@@ -3,8 +3,13 @@ package de.lonifa.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.naming.AuthenticationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import de.lonifa.user.domain.User;
@@ -105,5 +110,19 @@ public class UserServiceImpl implements UserService {
 		if (string.contains(string.toUpperCase())) {
 			throw new IllegalArgumentException(type + " muss mindestens einen Kleinbuchstaben enthalten");
 		}
+	}
+
+	@Override
+	public User getAuthenticatedUser() throws AuthenticationException, UsernameNotFoundException{
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if(authentication == null || !authentication.isAuthenticated()) {
+			throw new AuthenticationException("User not authenticated");
+		}
+		String loginName = authentication.getName();
+		User user = userRepository.findByLoginName(loginName);
+		if(user == null) {
+			throw new UsernameNotFoundException("User not found");
+		}
+		return user;
 	}
 }

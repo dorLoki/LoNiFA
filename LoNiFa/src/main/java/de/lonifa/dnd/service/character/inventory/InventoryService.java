@@ -9,6 +9,9 @@ import org.springframework.lang.NonNull;
 
 import de.lonifa.dnd.domain.character.PlayerCharacter;
 import de.lonifa.dnd.domain.character.inventory.Inventory;
+import de.lonifa.dnd.domain.character.inventory.InventoryDTO;
+import de.lonifa.dnd.domain.character.inventory.InventorySwapDTO;
+import de.lonifa.user.domain.User;
 
 public interface InventoryService {
 
@@ -29,5 +32,9 @@ public interface InventoryService {
     void deleteInventoryById(@NonNull Integer id);
 
     void deleteInventoryByPlayerCharacter(@NonNull @Valid PlayerCharacter playerCharacter);
+
+    InventoryDTO createInventoryDTO(@NonNull @Valid Inventory inventory);
+
+    void swapItems(@Valid @NonNull InventorySwapDTO swapDTO, @Valid @NonNull User user) throws IllegalArgumentException;
 
 }

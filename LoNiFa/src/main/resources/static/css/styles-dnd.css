@@ -20,7 +20,7 @@ li {
 
 .character-card {
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 3px solid #000000;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 4px;
@@ -69,21 +69,29 @@ li {
 }
 
 .inventory-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    margin: 20px;
 }
 
-.inventory-item {
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.inventory-table td {
+    border: 1px solid #ccc;
     text-align: center;
     padding: 10px;
-    background-color: #fafafa;
-    border: 1px solid #eaeaea;
-    border-radius: 4px;
+    height: 50px; /* Anpassbar */
+}
+
+.inventory-table .empty-slot {
+    background-color: #f2f2f2;
 }
 
 .item-name {
-    cursor: pointer;
+    background-color: #e0e0e0;
+    cursor: pointer; /* Wenn interaktive Elemente erwünscht */
 }
 
 .item-tooltip {

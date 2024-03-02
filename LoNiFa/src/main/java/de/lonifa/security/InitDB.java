@@ -172,7 +172,7 @@ public class InitDB {
 					EquipmentType.CrossbowHand, EquipmentType.CrossbowHeavy, EquipmentType.Longbow, EquipmentType.Net));
 			// Barbarian
 			Clazz barbarian = new Clazz();
-			barbarian.setClassType(ClazzType.BARBARIAN);
+			barbarian.setClazzType(ClazzType.BARBARIAN);
 			barbarian.setDescription(
 					"Ein grimmiger Krieger mit primitivem Hintergrund, der in einen Kampfrausch verfallen kann.");
 			barbarian.setHitDie(12);
@@ -188,7 +188,7 @@ public class InitDB {
 
 			// Bard
 			Clazz bard = new Clazz();
-			bard.setClassType(ClazzType.BARD);
+			bard.setClazzType(ClazzType.BARD);
 			bard.setDescription("Ein inspirierender Magier, in dessen Kraft die Musik der Schöpfung widerhallt.");
 			bard.setHitDie(8);
 			bard.setPrimaryAttribute(AttributeType.CHARISMA);
@@ -203,7 +203,7 @@ public class InitDB {
 
 			// Cleric
 			Clazz cleric = new Clazz();
-			cleric.setClassType(ClazzType.CLERIC);
+			cleric.setClazzType(ClazzType.CLERIC);
 			cleric.setDescription(
 					"Ein priesterlicher Champion, der im Dienste einer höheren Macht göttliche Magie ausübt.");
 			cleric.setHitDie(8);
@@ -219,7 +219,7 @@ public class InitDB {
 
 			// Druid
 			Clazz druid = new Clazz();
-			druid.setClassType(ClazzType.DRUID);
+			druid.setClazzType(ClazzType.DRUID);
 			druid.setDescription(
 					"Ein Priester des Alten Glaubens, der über die Kräfte der Natur - Mondlicht und Pflanzenwachstum, Feuer und Blitze - verfügt und Tiergestalten annimmt.");
 			druid.setHitDie(8);
@@ -236,7 +236,7 @@ public class InitDB {
 
 			// Fighter
 			Clazz fighter = new Clazz();
-			fighter.setClassType(ClazzType.FIGHTER);
+			fighter.setClazzType(ClazzType.FIGHTER);
 			fighter.setDescription(
 					"Ein Meister des Kampfes, der mit einer Vielzahl von Waffen und Rüstungen umgehen kann.");
 			fighter.setHitDie(10);
@@ -253,7 +253,7 @@ public class InitDB {
 
 			// Monk
 			Clazz monk = new Clazz();
-			monk.setClassType(ClazzType.MONK);
+			monk.setClazzType(ClazzType.MONK);
 			monk.setDescription(
 					"Ein Meister der Kampfkünste, der sich die Kraft des Körpers zunutze macht, um körperliche und geistige Perfektion zu erreichen.");
 			monk.setHitDie(8);
@@ -268,7 +268,7 @@ public class InitDB {
 
 			// Paladin
 			Clazz paladin = new Clazz();
-			paladin.setClassType(ClazzType.PALADIN);
+			paladin.setClazzType(ClazzType.PALADIN);
 			paladin.setDescription("Ein heiliger Krieger, der an einen heiligen Schwur gebunden ist.");
 			paladin.setHitDie(10);
 			paladin.setPrimaryAttribute(AttributeType.STRENGTH);
@@ -283,7 +283,7 @@ public class InitDB {
 
 			// Ranger
 			Clazz ranger = new Clazz();
-			ranger.setClassType(ClazzType.RANGER);
+			ranger.setClazzType(ClazzType.RANGER);
 			ranger.setDescription(
 					"Ein Krieger, der Kampfkraft und Naturmagie einsetzt, um Bedrohungen am Rande der Zivilisation zu bekämpfen.");
 			ranger.setHitDie(10);
@@ -300,7 +300,7 @@ public class InitDB {
 
 			// Rogue
 			Clazz rogue = new Clazz();
-			rogue.setClassType(ClazzType.ROGUE);
+			rogue.setClazzType(ClazzType.ROGUE);
 			rogue.setDescription("Ein Schurke, der mit List und Tücke Hindernisse und Feinde überwindet.");
 			rogue.setHitDie(8);
 			rogue.setPrimaryAttribute(AttributeType.DEXTERITY);
@@ -315,7 +315,7 @@ public class InitDB {
 
 			// Sorcerer
 			Clazz sorcerer = new Clazz();
-			sorcerer.setClassType(ClazzType.SORCERER);
+			sorcerer.setClazzType(ClazzType.SORCERER);
 			sorcerer.setDescription("Ein Zauberer, der die Magie aus einer Gabe oder Blutlinie bezieht.");
 			sorcerer.setHitDie(6);
 			sorcerer.setPrimaryAttribute(AttributeType.CHARISMA);
@@ -329,7 +329,7 @@ public class InitDB {
 
 			// Warlock
 			Clazz warlock = new Clazz();
-			warlock.setClassType(ClazzType.WARLOCK);
+			warlock.setClazzType(ClazzType.WARLOCK);
 			warlock.setDescription(
 					"Ein Träger von Magie, die aus einer Abmachung mit einem außerplanmäßigen Wesen stammt.");
 			warlock.setHitDie(8);
@@ -345,7 +345,7 @@ public class InitDB {
 
 			// Wizard
 			Clazz wizard = new Clazz();
-			wizard.setClassType(ClazzType.WIZARD);
+			wizard.setClazzType(ClazzType.WIZARD);
 			wizard.setDescription("Ein gelehrter Magieanwender, der die Strukturen der Realität manipulieren kann.");
 			wizard.setHitDie(6);
 			wizard.setPrimaryAttribute(AttributeType.INTELLIGENCE);
@@ -381,6 +381,96 @@ public class InitDB {
 			item.setEquipmentType(EquipmentType.HeavyArmor);
 			item.setDnDAttribute(new DnDAttribute(0, 3, 0, 0, 0, 1));
 			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Heiltrank");
+			item.setDescription("Ein Trank, der den Träger heilt.");
+			item.setWeight(1);
+			item.setValue(50);
+			item.setMaxStack(5);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Item);
+			item.setDnDAttribute(new DnDAttribute(0, 0, 0, 0, 0, 0));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Schild");
+			item.setDescription("Ein Schild, der den Träger vor Schaden schützt.");
+			item.setWeight(5);
+			item.setValue(10);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Shield);
+			item.setDnDAttribute(new DnDAttribute(0, 2, 0, 0, 0, 0));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Silberring");
+			item.setDescription("Ein Ring aus Silber.");
+			item.setWeight(0);
+			item.setValue(5);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Ring);
+			item.setDnDAttribute(new DnDAttribute(0, 0, 0, 0, 0, 1));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Goldring");
+			item.setDescription("Ein Ring aus Gold.");
+			item.setWeight(0);
+			item.setValue(10);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Ring);
+			item.setDnDAttribute(new DnDAttribute(0, 0, 0, 0, 0, 2));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Kupferring");
+			item.setDescription("Ein Ring aus Kupfer.");
+			item.setWeight(0);
+			item.setValue(1);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Ring);
+			item.setDnDAttribute(new DnDAttribute(0, 0, 0, 0, 0, 0));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Mönchsgewand");
+			item.setDescription("Ein Gewand, das von Mönchen getragen wird.");
+			item.setWeight(1);
+			item.setValue(5);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.LightArmor);
+			item.setDnDAttribute(new DnDAttribute(0, 1, 0, 0, 0, 1));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Zauberstab");
+			item.setDescription("Ein Stab, der von Magiern verwendet wird.");
+			item.setWeight(1);
+			item.setValue(5);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.Quarterstaff);
+			item.setDnDAttribute(new DnDAttribute(0, 0, 0, 0, 0, 1));
+			itemRepository.save(item);
+
+			item = new Item();
+			item.setName("Magierhut");
+			item.setDescription("Ein Hut, der von Magiern getragen wird.");
+			item.setWeight(1);
+			item.setValue(5);
+			item.setMaxStack(1);
+			item.setItemValue(5);
+			item.setEquipmentType(EquipmentType.LightHeadArmor);
+			item.setDnDAttribute(new DnDAttribute(0, 0, 0, 0, 0, 1));
+			itemRepository.save(item);
+
+
 		}
 
 		if (isInitDnD_skill) {
@@ -414,13 +504,73 @@ public class InitDB {
 			inventoryItem.setAmount(1);
 			inventoryItem.setInventory(inventory);
 			inventoryItem.setItem(itemRepository.findById(1).get());
+			inventoryItem.setSortIndex(0);
 			items.add(inventoryItem);
 
 			InventoryItem inventoryItem2 = new InventoryItem();
-			inventoryItem2.setAmount(3);
+			inventoryItem2.setAmount(1);
 			inventoryItem2.setInventory(inventory);
 			inventoryItem2.setItem(itemRepository.findById(2).get());
+			inventoryItem2.setSortIndex(1);
 			items.add(inventoryItem2);
+
+			InventoryItem inventoryItem3 = new InventoryItem();
+			inventoryItem3.setAmount(3);
+			inventoryItem3.setInventory(inventory);
+			inventoryItem3.setItem(itemRepository.findById(3).get());
+			inventoryItem3.setSortIndex(2);
+			items.add(inventoryItem3);
+
+			InventoryItem inventoryItem4 = new InventoryItem();
+			inventoryItem4.setAmount(1);
+			inventoryItem4.setInventory(inventory);
+			inventoryItem4.setItem(itemRepository.findById(4).get());
+			inventoryItem4.setSortIndex(3);
+			items.add(inventoryItem4);
+
+			InventoryItem inventoryItem5 = new InventoryItem();
+			inventoryItem5.setAmount(1);
+			inventoryItem5.setInventory(inventory);
+			inventoryItem5.setItem(itemRepository.findById(5).get());
+			inventoryItem5.setSortIndex(4);
+			items.add(inventoryItem5);
+			
+			InventoryItem inventoryItem6 = new InventoryItem();
+			inventoryItem6.setAmount(1);
+			inventoryItem6.setInventory(inventory);
+			inventoryItem6.setItem(itemRepository.findById(6).get());
+			inventoryItem6.setSortIndex(5);
+			items.add(inventoryItem6);
+
+			InventoryItem inventoryItem7 = new InventoryItem();
+			inventoryItem7.setAmount(1);
+			inventoryItem7.setInventory(inventory);
+			inventoryItem7.setItem(itemRepository.findById(7).get());
+			inventoryItem7.setSortIndex(6);
+			items.add(inventoryItem7);
+			
+			InventoryItem inventoryItem8 = new InventoryItem();
+			inventoryItem8.setAmount(1);
+			inventoryItem8.setInventory(inventory);
+			inventoryItem8.setItem(itemRepository.findById(8).get());
+			inventoryItem8.setSortIndex(7);
+			items.add(inventoryItem8);
+
+			InventoryItem inventoryItem9 = new InventoryItem();
+			inventoryItem9.setAmount(1);
+			inventoryItem9.setInventory(inventory);
+			inventoryItem9.setItem(itemRepository.findById(9).get());
+			inventoryItem9.setSortIndex(8);
+			items.add(inventoryItem9);
+
+			InventoryItem inventoryItem10 = new InventoryItem();
+			inventoryItem10.setAmount(1);
+			inventoryItem10.setInventory(inventory);
+			inventoryItem10.setItem(itemRepository.findById(10).get());
+			inventoryItem10.setSortIndex(9);
+			items.add(inventoryItem10);
+
+			
 
 			List<Skill> skills = new ArrayList<Skill>();
 			skills.add(skillRepository.findById(1).get());
@@ -450,8 +600,6 @@ public class InitDB {
 			// inv setup
 			inventory.setPlayerCharacter(playerCharacter);
 			inventory.setItems(items);
-			inventory.setTorso(items.get(1));
-			inventory.setWeaponPrimary(items.get(0));
 			inventory.setGold(50);
 
 			// skillRepository.saveAll(skills);

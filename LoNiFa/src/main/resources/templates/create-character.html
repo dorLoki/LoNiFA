@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: head"></head>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/styles-dnd.css" th:href="@{/css/styles-dnd.css}" media="screen">
+    <link rel="stylesheet" type="text/css" href="/css/styles-dnd-create-char.css" th:href="@{/css/styles-dnd-create-char.css}" media="screen">
+</head>
+
+<body>
+    <div th:include="fragments/body :: headline"></div>
+
+    <form th:action="@{/dnd/create-character}" method="post" th:object="${characterForm}">
+
+        <label for="name">Name:</label>
+        <input type="text" th:field="*{name}" id="name" required>
+
+        <label for="raceType">Rasse:</label>
+        <select th:field="*{raceType}" id="raceType" onchange="updateTotalAttributs()">
+            <option th:each="race : ${races}" th:value="${race.raceType}" th:data-strength="${race.attribute.strength}"
+                th:data-dexterity="${race.attribute.dexterity}" th:data-constitution="${race.attribute.constitution}"
+                th:data-intelligence="${race.attribute.intelligence}" th:data-wisdom="${race.attribute.wisdom}"
+                th:data-charisma="${race.attribute.charisma}" th:data-description="${race.description}" th:text="${race.raceType.getDisplayName()}">
+            </option>
+        </select>
+        <div id="raceDescription"></div>
+        <label for="clazzType">Klasse:</label>
+        <select th:field="*{clazzType}" id="clazzType" onchange="updateClassDescription()">
+            <option th:each="clazz : ${classes}" th:value="${clazz.clazzType}" th:data-description="${clazz.description}"
+                th:text="${clazz.clazzType.getDisplayName()}">
+            </option>
+        </select>
+        <div id="classDescription"></div>
+
+        <div id="pointsLeft">Verbleibende Punkte: 27</div>
+        <label for="strength">Stärke:</label>
+        <input type="range" id="strength" name="strength" min="8" max="15" value="8" oninput="updatePoints()">
+
+        <label for="dexterity">Geschicklichkeit:</label>
+        <input type="range" id="dexterity" name="dexterity" min="8" max="15" value="8" oninput="updatePoints()">
+
+        <label for="constitution">Konstitution:</label>
+        <input type="range" id="constitution" name="constitution" min="8" max="15" value="8" oninput="updatePoints()">
+
+        <label for="intelligence">Intelligenz:</label>
+        <input type="range" id="intelligence" name="intelligence" min="8" max="15" value="8" oninput="updatePoints()">
+
+        <label for="wisdom">Weisheit:</label>
+        <input type="range" id="wisdom" name="wisdom" min="8" max="15" value="8" oninput="updatePoints()">
+
+        <label for="charisma">Charisma:</label>
+        <input type="range" id="charisma" name="charisma" min="8" max="15" value="8" oninput="updatePoints()">
+
+        <table id="totalAttributsTable">
+            <tr>
+                <th>Attribut</th>
+                <th>Gesamtpunkte</th>
+            </tr>
+            <tr>
+                <td>Stärke</td>
+                <td id="totalStrength">0</td>
+            </tr>
+            <tr>
+                <td>Geschicklichkeit</td>
+                <td id="totalDexterity">0</td>
+            </tr>
+            <tr>
+                <td>Konstitution</td>
+                <td id="totalConstitution">0</td>
+            </tr>
+            <tr>
+                <td>Intelligenz</td>
+                <td id="totalIntelligence">0</td>
+            </tr>
+            <tr>
+                <td>Weisheit</td>
+                <td id="totalWisdom">0</td>
+            </tr>
+            <tr>
+                <td>Charisma</td>
+                <td id="totalCharisma">0</td>
+            </tr>
+        </table>
+
+
+        <input type="submit" id="submitButton" value="Charakter erstellen" disabled>
+    </form>
+
+    <script th:inline="javascript">
+        let totalPoints = 27;
+        let usedPoints = 0;
+
+        function updatePoints() {
+            usedPoints = 0;
+            usedPoints += calculatePoints(document.getElementById('strength').value);
+            usedPoints += calculatePoints(document.getElementById('dexterity').value);
+            usedPoints += calculatePoints(document.getElementById('constitution').value);
+            usedPoints += calculatePoints(document.getElementById('intelligence').value);
+            usedPoints += calculatePoints(document.getElementById('wisdom').value);
+            usedPoints += calculatePoints(document.getElementById('charisma').value);
+
+            let remainingPoints = totalPoints - usedPoints;
+            let pointsLeft = document.getElementById('pointsLeft');
+            let submitButton = document.getElementById('submitButton');
+
+            pointsLeft.innerHTML = 'Verbleibende Punkte: ' + remainingPoints;
+            if (remainingPoints < 0) {
+                pointsLeft.style.color = 'red';
+                submitButton.disabled = true;
+            } else {
+                if (remainingPoints > 0) {
+                    pointsLeft.style.color = 'green';
+                    submitButton.disabled = true;
+                } else {
+                    pointsLeft.style.color = 'black';
+                    submitButton.disabled = false;
+                }
+            }
+            updateTotalAttributs();
+        }
+
+        function calculatePoints(value) {
+            const cost = { 8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9 };
+            return cost[value];
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            updatePoints(); // Initialer Aufruf, um die Punkte zu setzen
+            updateClassDescription();
+        });
+
+        function updateTotalAttributs() {
+            const strength = parseInt(document.getElementById('strength').value) || 0;
+            const dexterity = parseInt(document.getElementById('dexterity').value) || 0;
+            const constitution = parseInt(document.getElementById('constitution').value) || 0;
+            const intelligence = parseInt(document.getElementById('intelligence').value) || 0;
+            const wisdom = parseInt(document.getElementById('wisdom').value) || 0;
+            const charisma = parseInt(document.getElementById('charisma').value) || 0;
+
+
+            const selectedRace = document.getElementById('raceType').value;
+            const selectedRaceOption = document.querySelector('#raceType option:checked');
+
+            const extraStrength = parseInt(selectedRaceOption.getAttribute('data-strength')) || 0;
+            const extraDexterity = parseInt(selectedRaceOption.getAttribute('data-dexterity')) || 0;
+            const extraConstitution = parseInt(selectedRaceOption.getAttribute('data-constitution')) || 0;
+            const extraIntelligence = parseInt(selectedRaceOption.getAttribute('data-intelligence')) || 0;
+            const extraWisdom = parseInt(selectedRaceOption.getAttribute('data-wisdom')) || 0;
+            const extraCharisma = parseInt(selectedRaceOption.getAttribute('data-charisma')) || 0;
+
+            const totalStrength = strength + extraStrength;
+            document.getElementById('totalStrength').innerText = totalStrength;
+            const totalDexterity = dexterity + extraDexterity;
+            document.getElementById('totalDexterity').innerText = totalDexterity;
+            const totalConstitution = constitution + extraConstitution;
+            document.getElementById('totalConstitution').innerText = totalConstitution;
+            const totalIntelligence = intelligence + extraIntelligence;
+            document.getElementById('totalIntelligence').innerText = totalIntelligence;
+            const totalWisdom = wisdom + extraWisdom;
+            document.getElementById('totalWisdom').innerText = totalWisdom;
+            const totalCharisma = charisma + extraCharisma;
+            document.getElementById('totalCharisma').innerText = totalCharisma;
+
+            updateRaceDescription();
+        }
+
+        function updateRaceDescription() {
+            const selectedRace = document.getElementById('raceType').value;
+            const selectedRaceOption = document.querySelector('#raceType option:checked');
+            const description = selectedRaceOption.getAttribute('data-description');
+            document.getElementById('raceDescription').innerText = description;
+        }
+
+        function updateClassDescription(){
+            const selectedClass = document.getElementById('clazzType').value;
+            const selectedClassOption = document.querySelector('#clazzType option:checked');
+            const description = selectedClassOption.getAttribute('data-description');
+            document.getElementById('classDescription').innerText = description;
+        }
+    </script>
+
+</body>

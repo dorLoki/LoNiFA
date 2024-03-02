@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 
 import de.lonifa.dnd.domain.character.clazz.Clazz;
 import de.lonifa.dnd.domain.character.clazz.ClazzType;
+import de.lonifa.dnd.domain.character.skill.Skill;
 
 public interface ClazzService {
     
@@ -25,4 +26,8 @@ public interface ClazzService {
     void deleteAllClazzes();
 
     void deleteClazz(@Valid @NonNull Clazz clazz);
+
+    int getHitDie(@NonNull ClazzType clazzType);
+
+    List<Skill> getStarterSkills(@NonNull ClazzType clazzType);
 }

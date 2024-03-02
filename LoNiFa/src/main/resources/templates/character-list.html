@@ -6,76 +6,16 @@
 <head>
     <link rel="stylesheet" type="text/css" href="/css/styles-dnd.css" th:href="@{/css/styles-dnd.css}" media="screen">
     <script th:src="@{/js/dnd-item-hover.js}"></script>
+    <script th:src="@{/js/dnd-inventory.js}"></script>
 </head>
 
 <body>
     <div th:include="fragments/body :: headline"></div>
 
-    <div th:if="${char1}" class="character-card">
-        <h2 th:text="${char1.name}"></h2>
-        <div class="character-info">
-            <p th:text="'Rasse: ' + ${char1.raceType.getDisplayName()}"></p>
-            <p th:text="'Klasse: ' + ${char1.clazzType.getDisplayName()}"></p>
-            <div class="health-bar">
-                <div class="health-bar-value" th:style="'width:' + ${char1.currentHitPoints} / ${char1.maxHitPoints}">
-                </div>
-            </div>
-            <p th:text="'XP: ' + ${char1.xp}"></p>
-            <p th:text="'Level: ' + ${char1.level}"></p>
-        </div>
-        <div th:if="${char1.skills}" class="skills-list">
-            <h3>Skills</h3>
-            <ul>
-                <li th:each="skill : ${char1.skills}" th:text="${skill.displayName}"></li>
-            </ul>
-        </div>
-        <div th:if="${char1.inventory}" class="inventory">
-            <h3>Inventory</h3>
-            <p th:text="'Gold: ' + ${char1.inventory.gold}"></p>
+    <div th:include="fragments/character-fragment :: characterCard(${char1}, ${playerInventory1})"></div>
+    <div th:include="fragments/character-fragment :: characterCard(${char2}, ${playerInventory2})"></div>
+    <div th:include="fragments/character-fragment :: characterCard(${char3}, ${playerInventory3})"></div>
 
-            <p th:classappend="(${char1.inventory.head?.item?.id} ? 'item-name' : '')"
-                th:data-item-id="${char1.inventory.head?.item?.id}"
-                th:text="'Kopf: ' + (${char1.inventory.head?.item?.name} ?: 'leer')">
-            </p>
-
-            <p th:classappend="(${char1.inventory.torso?.item?.id} ? 'item-name' : '')"
-                th:data-item-id="${char1.inventory.torso?.item?.id}"
-                th:text="'Brust: ' + (${char1.inventory.torso?.item?.name} ?: 'leer')">
-            </p>
-            <p th:classappend="(${char1.inventory.ringLeft?.item?.id} ? 'item-name' : '')"
-                th:data-item-id="${char1.inventory.ringLeft?.item?.id}"
-                th:text="'Ring Links: ' + (${char1.inventory.ringLeft?.item?.name} ?: 'leer')">
-            </p>
-
-            <p th:classappend="(${char1.inventory.ringRight?.item?.id} ? 'item-name' : '')"
-                th:data-item-id="${char1.inventory.ringRight?.item?.id}"
-                th:text="'Ring Rechts: ' + (${char1.inventory.ringRight?.item?.name} ?: 'leer')">
-            </p>
-
-
-            <p th:classappend="(${char1.inventory.weaponPrimary?.item?.id} ? 'item-name' : '')"
-                th:data-item-id="${char1.inventory.weaponPrimary?.item?.id}"
-                th:text="'Hand: ' + (${char1.inventory.weaponPrimary?.item?.name} ?: 'leer')">
-            </p>
-
-            <p th:classappend="(${char1.inventory.weaponSecondary?.item?.id} ? 'item-name' : '')"
-                th:data-item-id="${char1.inventory.weaponSecondary?.item?.id}"
-                th:text="'Zweithand: ' + (${char1.inventory.weaponSecondary?.item?.name} ?: 'leer')">
-            </p>
-        </div>
-        <div th:if="${char1.inventory}" class="inventory-list">
-            <ul>
-                <li th:each="inventoryItem : ${char1.inventory.items}" class="inventory-item">
-                    <p th:classappend="(${inventoryItem.item?.id} ? 'item-name' : '')"
-                        th:data-item-id="${inventoryItem.item?.id}" th:text="${inventoryItem.item?.name}"></p>
-
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div th:unless="${char1}">
-        <h2>No character char 1 found</h2>
-    </div>
     <div id="item-tooltip" class="item-tooltip" style="display: none;">
         <!-- Tooltip-Inhalte werden per AJAX hier eingefügt -->
     </div>

@@ -24,7 +24,7 @@ public class Clazz {
     @Id
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ClazzType classType;
+    private ClazzType clazzType;
 
     @NotNull
     @NotBlank
@@ -66,12 +66,12 @@ public class Clazz {
     }
 
     // getter and setter
-    public ClazzType getClassType() {
-        return classType;
+    public ClazzType getClazzType() {
+        return clazzType;
     }
 
-    public void setClassType(ClazzType classType) {
-        this.classType = classType;
+    public void setClazzType(ClazzType classType) {
+        this.clazzType = classType;
     }
 
     public String getDescription() {

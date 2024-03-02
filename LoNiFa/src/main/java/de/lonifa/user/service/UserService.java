@@ -3,7 +3,10 @@ package de.lonifa.user.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.naming.AuthenticationException;
+
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import de.lonifa.user.domain.User;
 
@@ -56,4 +59,6 @@ public interface UserService {
 	 * @param user Der zu registrierende User.
 	 */
 	void registerUser(@NonNull User user) throws IllegalArgumentException;
+
+	public User getAuthenticatedUser() throws AuthenticationException, UsernameNotFoundException;
 }

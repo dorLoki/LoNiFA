@@ -21,6 +21,10 @@ public class InventoryItem extends BaseEntity{
     @JoinColumn(name = "inventory_id")
     private Inventory inventory;
 
+    @Min(0)
+    @Max(30)
+    private int sortIndex;
+
     @NotNull
     @ManyToOne
     @JoinColumn(name = "item_id")
@@ -53,5 +57,13 @@ public class InventoryItem extends BaseEntity{
 
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public int getSortIndex() {
+        return sortIndex;
+    }
+
+    public void setSortIndex(int sortIndex) {
+        this.sortIndex = sortIndex;
     }
 }

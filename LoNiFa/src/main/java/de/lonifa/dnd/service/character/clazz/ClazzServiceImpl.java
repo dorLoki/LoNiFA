@@ -1,5 +1,6 @@
 package de.lonifa.dnd.service.character.clazz;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import de.lonifa.dnd.domain.character.clazz.Clazz;
 import de.lonifa.dnd.domain.character.clazz.ClazzRepository;
 import de.lonifa.dnd.domain.character.clazz.ClazzType;
+import de.lonifa.dnd.domain.character.skill.Skill;
 
 @Service
 public class ClazzServiceImpl implements ClazzService {
@@ -30,8 +32,8 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public void updateClazz(@Valid @NonNull Clazz clazz) throws IllegalArgumentException{
-        ClazzType clazzType = clazz.getClassType();
+    public void updateClazz(@Valid @NonNull Clazz clazz) throws IllegalArgumentException {
+        ClazzType clazzType = clazz.getClazzType();
         if (clazzType == null || !clazzRepository.existsById(clazzType)) {
             throw new IllegalArgumentException("Klasse nicht vorhanden.");
         }
@@ -40,7 +42,7 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public void registerClazz(@NonNull Clazz clazz) throws IllegalArgumentException {
-        ClazzType clazzType = clazz.getClassType();
+        ClazzType clazzType = clazz.getClazzType();
         if (clazzType == null || clazzRepository.existsById(clazzType)) {
             throw new IllegalArgumentException("Klasse schon vorhanden.");
         }
@@ -60,6 +62,17 @@ public class ClazzServiceImpl implements ClazzService {
     @Override
     public void deleteClazz(@NonNull ClazzType clazzType) {
         clazzRepository.deleteById(clazzType);
+    }
+
+    @Override
+    public int getHitDie(@NonNull ClazzType clazzType) {
+        return clazzRepository.findById(clazzType).get().getHitDie();
+    }
+
+    @Override
+    public List<Skill> getStarterSkills(@NonNull ClazzType clazzType) {
+        List<Skill> skills = new ArrayList<>();
+        return skills;
     }
 
 }

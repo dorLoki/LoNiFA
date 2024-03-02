@@ -1,9 +1,16 @@
 package de.lonifa.dnd.domain.character.item;
 
 public enum EquipmentType {
+    LightHeadArmor("Leichte Kopfrüstung"),
+    MediumHeadArmor("Mittlere Kopfrüstung"),
+    HeavyHeadArmor("Schwere Kopfrüstung"),
+
     LightArmor("Leichte Rüstung"),
     MediumArmor("Mittlere Rüstung"),
     HeavyArmor("Schwere Rüstung"),
+
+    Ring("Ring"),
+
 
     Shield("Schild"),
 
