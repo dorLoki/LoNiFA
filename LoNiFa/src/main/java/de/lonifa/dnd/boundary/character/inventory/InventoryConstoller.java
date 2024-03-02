@@ -50,7 +50,6 @@ public class InventoryConstoller {
         try {
             inventoryService.swapItems(swapDTO, user);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
             return ResponseEntity.status(Response.SC_BAD_REQUEST).build();
         }
         return ResponseEntity.status(Response.SC_OK).build();

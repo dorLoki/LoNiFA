@@ -54,7 +54,6 @@ public class Inventory extends BaseEntity {
     }
 
     public int getGold() {
-        System.out.println(this.gold + " gold");
         return gold;
     }
 

@@ -2,95 +2,129 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 
 <body>
-    <div th:fragment="characterCard(playercharacter, playerInventory)">
-        <div class="character-card">
-            <div th:if="${playercharacter}">
-                <h2 th:text="${playercharacter.name}"></h2>
-                <div class="character-info">
-                    <p th:text="'Rasse: ' + ${playercharacter.raceType.getDisplayName()}"></p>
-                    <p th:text="'Klasse: ' + ${playercharacter.clazzType.getDisplayName()}"></p>
-                    <div class="health-bar">
-                        <div class="health-bar-value"
-                            th:style="'width:' + ${playercharacter.currentHitPoints} / ${playercharacter.maxHitPoints}">
-                        </div>
-                    </div>
-                    <p th:text="'XP: ' + ${playercharacter.xp}"></p>
-                    <p th:text="'Level: ' + ${playercharacter.level}"></p>
-                </div>
-                <div th:if="${playercharacter.skills}" class="skills-list">
-                    <h3>Skills</h3>
-                    <ul>
-                        <li th:each="skill : ${playercharacter.skills}" th:text="${skill.displayName}"></li>
-                    </ul>
-                </div>
-                <div th:if="${playerInventory}">
+    <div th:fragment="charSkills(skills)">
+        <div class="skills-list">
+            <h3>Skills</h3>
+            <div th:if="${skills}">
+                <ul>
+                    <li th:each="skill : ${skills}" th:text="${skill.displayName}"></li>
+                </ul>
+            </div>
+            <div th:unless="${skills}">
+                <p>Keine Skills gefunden</p>
+            </div>
+        </div>
+    </div>
 
-                    <div class="inventory">
-                        <h3>Inventory</h3>
-                        <div th:if="${playercharacter.inventory}" class="inventory">
-                            <p th:text="'Gold: ' + ${playercharacter.inventory.gold}"></p>
-                        </div>
-                        <p th:classappend="${playerInventory.head != null ? 'item-name' : null}"
-                            th:attr="draggable=${playerInventory.head != null ? 'true' : 'false'}"
-                            ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
-                            th:data-item-id="${playerInventory.head!=null ? playerInventory.head.item.id : null}"
-                            th:id="16"
-                            th:text="${playerInventory.head != null ? playerInventory.head.item.name : 'Kopf: Leer'}">
-                        </p>
-                        <p th:classappend="${playerInventory.body != null ? 'item-name' : null}"
-                            th:attr="draggable=${playerInventory.body != null ? 'true' : 'false'}"
-                            ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
-                            th:data-item-id="${playerInventory.body!=null ? playerInventory.body.item.id : null}"
-                            th:id="17"
-                            th:text="${playerInventory.body != null ? playerInventory.body.item.name : 'Brust: Leer'}">
-                        </p>
-                        <p th:classappend="${playerInventory.ringLeft != null ? 'item-name' : null}"
-                            th:attr="draggable=${playerInventory.ringLeft != null ? 'true' : 'false'}"
-                            ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
-                            th:data-item-id="${playerInventory.ringLeft!=null ? playerInventory.ringLeft.item.id : null}"
-                            th:id="18"
-                            th:text="${playerInventory.ringLeft != null ? playerInventory.ringLeft.item.name : 'Ring Links: Leer'}">
-                        </p>
-                        <p th:classappend="${playerInventory.ringRight != null ? 'item-name' : null}"
-                            th:attr="draggable=${playerInventory.ringRight != null ? 'true' : 'false'}"
-                            ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
-                            th:data-item-id="${playerInventory.ringRight!=null ? playerInventory.ringRight.item.id : null}"
-                            th:id="19"
-                            th:text="${playerInventory.ringRight != null ? playerInventory.ringRight.item.name : 'Ring Rechts: Leer'}">
-                        </p>
-                        <p th:classappend="${playerInventory.weaponPrimary != null ? 'item-name' : null}"
-                            th:attr="draggable=${playerInventory.weaponPrimary != null ? 'true' : 'false'}"
-                            ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
-                            th:data-item-id="${playerInventory.weaponPrimary!=null ? playerInventory.weaponPrimary.item.id : null}"
-                            th:id="20"
-                            th:text="${playerInventory.weaponPrimary != null ? playerInventory.weaponPrimary.item.name : 'Hand: Leer'}">
-                        </p>
-                        <p th:classappend="${playerInventory.weaponSecondary != null ? 'item-name' : null}"
-                            th:attr="draggable=${playerInventory.weaponSecondary != null ? 'true' : 'false'}"
-                            ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
-                            th:data-item-id="${playerInventory.weaponSecondary!=null ? playerInventory.weaponSecondary.item.id : null}"
-                            th:id="21"
-                            th:text="${playerInventory.weaponSecondary != null ? playerInventory.weaponSecondary.item.name : 'Zweithand: Leer'}">
-                        </p>
+    <div th:fragment="charBaseData(playercharacter)">
+        <div th:if="${playercharacter}">
+            <h2 th:text="${playercharacter.name}"></h2>
+            <div class="character-info">
+                <p th:text="'Rasse: ' + ${playercharacter.raceType.getDisplayName()}"></p>
+                <p th:text="'Klasse: ' + ${playercharacter.clazzType.getDisplayName()}"></p>
+                <div class="health-bar">
+                    <div class="health-bar-value"
+                        th:style="'width: ' + ${playercharacter.currentHitPoints} / ${playercharacter.maxHitPoints}">
                     </div>
-                    <div class="inventory-list" th:data-inventory-id="${playercharacter.inventory.id}">
-                        <table class="inventory-table">
-                            <tr th:each="row, rowStat : ${playerInventory.items}">
-                                <td th:each="item, colStat : ${row}" draggable="true" ondragstart="drag(event)"
-                                    ondrop="drop(event)" ondragover="allowDrop(event)"
-                                    th:classappend="${item != null ? 'item-name' : null}"
-                                    th:data-item-id="${item != null ? item.item.id : null}"
-                                    th:id="${(rowStat.index * 5 + colStat.index)}"
-                                    th:text="${item != null ? item.item.name : 'Leer'}">
-                                </td>
-                            </tr>
-                        </table>
+                </div>
+                <p th:text="'XP: ' + ${playercharacter.xp}"></p>
+                <p th:text="'Level: ' + ${playercharacter.level}"></p>
+            </div>
+        </div>
+        <div th:unless="${playercharacter}">
+            <h2>Kein Character gefunden</h2>
+        </div>
+    </div>
 
+    <div th:fragment="charInventory(playerInventory)">
+        <div th:if="${playerInventory}">
+            <div class="inventory-header">
+                <div class="inventory">
+                    <h3>Inventory</h3>
+                    <div th:if="${playercharacter.inventory}" class="inventory">
+                        <p th:text="'Gold: ' + ${playercharacter.inventory.gold}"></p>
                     </div>
+                    <p th:classappend="${playerInventory.head != null ? 'item-name' : null}" th:attr="draggable=${playerInventory.head != null ? 'true' : 'false'}, 
+                    onmouseenter=${playerInventory.head != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                    onmousemove=${playerInventory.head != null ? 'itemHoverMouseMove(event)' : null}, 
+                    onmouseleave=${playerInventory.head != null ? 'itemHoverMouseLeave()' : null}"
+                        ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        th:data-item-id="${playerInventory.head!=null ? playerInventory.head.item.id : null}" th:id="16"
+                        th:text="${playerInventory.head != null ? playerInventory.head.item.name : 'Kopf: Leer'}">
+                    </p>
+                    <p th:classappend="${playerInventory.body != null ? 'item-name' : null}" th:attr="draggable=${playerInventory.body != null ? 'true' : 'false'}, 
+                    onmouseenter=${playerInventory.body != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                    onmousemove=${playerInventory.body != null ? 'itemHoverMouseMove(event)' : null}, 
+                    onmouseleave=${playerInventory.body != null ? 'itemHoverMouseLeave()' : null}"
+                        ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        th:data-item-id="${playerInventory.body!=null ? playerInventory.body.item.id : null}" th:id="17"
+                        th:text="${playerInventory.body != null ? playerInventory.body.item.name : 'Brust: Leer'}">
+                    </p>
+                    <p th:classappend="${playerInventory.ringLeft != null ? 'item-name' : null}" th:attr="draggable=${playerInventory.ringLeft != null ? 'true' : 'false'}, 
+                    onmouseenter=${playerInventory.ringLeft != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                    onmousemove=${playerInventory.ringLeft != null ? 'itemHoverMouseMove(event)' : null}, 
+                    onmouseleave=${playerInventory.ringLeft != null ? 'itemHoverMouseLeave()' : null}"
+                        ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        th:data-item-id="${playerInventory.ringLeft!=null ? playerInventory.ringLeft.item.id : null}"
+                        th:id="18"
+                        th:text="${playerInventory.ringLeft != null ? playerInventory.ringLeft.item.name : 'Ring Links: Leer'}">
+                    </p>
+                    <p th:classappend="${playerInventory.ringRight != null ? 'item-name' : null}" th:attr="draggable=${playerInventory.ringRight != null ? 'true' : 'false'}, 
+                    onmouseenter=${playerInventory.ringRight != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                    onmousemove=${playerInventory.ringRight != null ? 'itemHoverMouseMove(event)' : null}, 
+                    onmouseleave=${playerInventory.ringRight != null ? 'itemHoverMouseLeave()' : null}"
+                        ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        th:data-item-id="${playerInventory.ringRight!=null ? playerInventory.ringRight.item.id : null}"
+                        th:id="19"
+                        th:text="${playerInventory.ringRight != null ? playerInventory.ringRight.item.name : 'Ring Rechts: Leer'}">
+                    </p>
+                    <p th:classappend="${playerInventory.weaponPrimary != null ? 'item-name' : null}" th:attr="draggable=${playerInventory.weaponPrimary != null ? 'true' : 'false'}, 
+                    onmouseenter=${playerInventory.weaponPrimary != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                    onmousemove=${playerInventory.weaponPrimary != null ? 'itemHoverMouseMove(event)' : null}, 
+                    onmouseleave=${playerInventory.weaponPrimary != null ? 'itemHoverMouseLeave()' : null}"
+                        ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        th:data-item-id="${playerInventory.weaponPrimary!=null ? playerInventory.weaponPrimary.item.id : null}"
+                        th:id="20"
+                        th:text="${playerInventory.weaponPrimary != null ? playerInventory.weaponPrimary.item.name : 'Hand: Leer'}">
+                    </p>
+                    <p th:classappend="${playerInventory.weaponSecondary != null ? 'item-name' : null}" th:attr="draggable=${playerInventory.weaponSecondary != null ? 'true' : 'false'}, 
+                    onmouseenter=${playerInventory.weaponSecondary != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                    onmousemove=${playerInventory.weaponSecondary != null ? 'itemHoverMouseMove(event)' : null}, 
+                    onmouseleave=${playerInventory.weaponSecondary != null ? 'itemHoverMouseLeave()' : null}"
+                        ondragstart="drag(event)" ondrop="drop(event)" ondragover="allowDrop(event)"
+                        th:data-item-id="${playerInventory.weaponSecondary!=null ? playerInventory.weaponSecondary.item.id : null}"
+                        th:id="21"
+                        th:text="${playerInventory.weaponSecondary != null ? playerInventory.weaponSecondary.item.name : 'Zweithand: Leer'}">
+                    </p>
+                </div>
+                <div class="inventory-list" th:data-inventory-id="${playercharacter.inventory.id}">
+                    <table class="inventory-table">
+                        <tr th:each="row, rowStat : ${playerInventory.items}">
+                            <td th:each="item, colStat : ${row}" ondragstart="drag(event)" ondrop="drop(event)"
+                                ondragover="allowDrop(event)" th:attr="draggable=${item != null ? 'true' : 'false'}, 
+                                onmouseenter=${item != null ? 'itemHoverMouseEnter(this, event)' : null}, 
+                                onmousemove=${item != null ? 'itemHoverMouseMove(event)' : null}, 
+                                onmouseleave=${item != null ? 'itemHoverMouseLeave()' : null}"
+                                th:classappend="${item != null ? 'item-name' : null}"
+                                th:data-item-id="${item != null ? item.item.id : null}"
+                                th:id="${(rowStat.index * 5 + colStat.index)}"
+                                th:text="${item != null ? item.item.name : 'Leer'}">
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div th:unless="${playercharacter}">
-                <h2>Kein Character gefunden</h2>
+        </div>
+        <div th:unless="${playerInventory}">
+            <h3>Kein Inventory gefunden</h3>
+        </div>
+    </div>
+    <div th:fragment="characterCard(playercharacter, playerInventory)">
+        <div class="character-card">
+            <div th:replace="fragments/character-fragment::charBaseData(${playercharacter})"></div>
+            <div th:if="${playercharacter}">
+                <div th:replace="fragments/character-fragment::charSkills(${playercharacter.skills})"></div>
+                <div th:replace="fragments/character-fragment::charInventory(${playerInventory})"></div>
             </div>
         </div>
     </div>

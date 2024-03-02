@@ -122,7 +122,6 @@ public class RCON {
 		final byte byteTwo = packageTailBytes.get(1);
 
 		if (byteOne != 0 || byteTwo != 0) {
-			System.out.println("Error: Unexpected package tail bytes");
 			throw new UnexpectedException("Unexpected package tail bytes");
 		}
 		final byte[] dataBytesArray = new byte[dataBytes.remaining()];

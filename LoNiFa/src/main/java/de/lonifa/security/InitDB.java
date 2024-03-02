@@ -631,8 +631,5 @@ public class InitDB {
 			enemy.setAC(1);
 			enemyRepository.save(enemy);
 		}
-	
-	User user = userRepository.findByLoginName("luke");
-	user.getCharacters().forEach(c -> System.out.println(c.getName()));
 	}
 }

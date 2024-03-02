@@ -57,11 +57,11 @@ public class PlayerCharacterController {
         switch (chars.size()) {
             case 3:
                 model.addAttribute("char3", chars.get(2));
-                model.addAttribute("playerInventory1",
+                model.addAttribute("playerInventory3",
                         inventoryService.createInventoryDTO(chars.get(2).getInventory()));
             case 2:
                 model.addAttribute("char2", chars.get(1));
-                model.addAttribute("playerInventory1",
+                model.addAttribute("playerInventory2",
                         inventoryService.createInventoryDTO(chars.get(1).getInventory()));
             case 1:
                 model.addAttribute("char1", chars.get(0));
