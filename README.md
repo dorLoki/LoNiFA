@@ -1,10 +1,10 @@
-# LoNiFa Website Project
+# LoNiFa Website
 
 *Note: This project ended and the website is now offline.*
 
 ## Overview
 
-The LoNiFa Website project was developed as a comprehensive platform integrating various functionalities for a gaming and role-playing community. Built on Spring Boot, the website combined server management tools, user administration, and an experimental RPG module inspired by Dungeons & Dragons. 
+The LoNiFa website was developed as a comprehensive platform integrating various functionalities for a gaming and role-playing community. Built on Spring Boot, the website combined server management tools, user administration, and an experimental RPG module inspired by Dungeons & Dragons. 
 
 ## Key Features
 
@@ -54,30 +54,6 @@ The LoNiFa Website project was developed as a comprehensive platform integrating
   
 - **User Interface:**  
   The website featured a modern, responsive GUI that facilitated easy navigation and control over various functionalities. While the Minecraft and Palworl modules were fully integrated, the DnD module’s interface remains incomplete.
-
-## Setup and Deployment
-
-### Development Environment
-- **Maven Build System:**  
-  The project was structured using Maven, which managed dependencies and streamlined the build process.
-  
-- **Configuration:**  
-  Application properties and environment settings were defined in configuration files, allowing for flexible deployment across different environments.
-
-### Deployment Process
-1. **Building the Project:**  
-   - Use Maven to clean, compile, and package the application.
-   - Example command:  
-     ```bash
-     mvn clean package
-     ```
-   
-2. **Server Deployment:**  
-   - The packaged application was deployed on a server environment where Spring Boot managed the runtime.
-   - Appropriate configurations ensured that both the web interface and internal RCON integrations operated smoothly.
-
-3. **Accessing the Website:**  
-   - Once deployed, users could access the website via a standard web browser. The multi-role user system allowed for differentiated access to various modules (e.g., Minecraft console, Palworl controls).
 
 ## Project Status and Future Considerations
 
