@@ -6,7 +6,7 @@
 	<div th:fragment="headline">
 		<div class="header">
 			<a th:href="@{/}">
-				<img src="images/icon.png" alt="Logo" />
+				<img th:src="@{/images/icon.png}" alt="Logo" />
 			</a>
 			<div th:if="${ROLE_ADMIN}">
 				<!-- admin stuff -->

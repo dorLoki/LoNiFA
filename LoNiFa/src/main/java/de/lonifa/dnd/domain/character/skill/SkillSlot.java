@@ -12,7 +12,7 @@ public enum SkillSlot {
     T9("Stufe 9"),
     T10("Stufe 10"),
 
-    NULL_SLOT("Stufe Nichts");
+    NULL_SLOT("Kein Slot");
 
     private final String displayName;
     SkillSlot(String displayName) {

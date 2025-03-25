@@ -621,7 +621,6 @@ public class InitDB {
 			enemy.setAttribute(new DnDAttribute(10, 10, 10, 10, 10, 10));
 			enemy.setLoot(null);
 			enemy.setMaxHitPoints(5);
-			enemy.setCurrentHitPoints(5);
 			enemy.setXpDrop(5);
 
 			// skill list

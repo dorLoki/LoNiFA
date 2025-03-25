@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head th:include="fragments/header :: head">
+</head>
+
+<head>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script>
+		$(document).ready(function () {
+			$('#skillTable').DataTable();
+		});
+	</script>
+</head>
+
+<body>
+    <div th:include="fragments/body :: headline"></div>
+    <h1>Skill Erstellen</h1>
+    <form th:action="@{/dnd/skill/create}" method="post">
+        <label for="displayName">Name:</label>
+        <input type="text" id="displayName" name="displayName" required minlength="1" maxlength="50">
+
+        <label for="description">Beschreibung:</label>
+        <textarea id="description" name="description" required minlength="1" maxlength="500"></textarea>
+
+        <label for="slot">Slot:</label>
+        <select id="slot" name="slot" required>
+            <option th:each="slot : ${skillSlots}" th:value="${slot}" th:text="${slot.displayName}"></option>
+        </select>
+
+        <label for="castingTime">Zauberzeit:</label>
+        <input type="number" id="castingTime" name="castingTime" min="0" max="9">
+
+        <label for="roll">Würfelwurf:</label>
+        <input type="number" id="roll" name="roll" min="0" max="999">
+
+        <label for="element">Element:</label>
+        <select id="element" name="element" required>
+            <option th:each="element : ${skillElements}" th:value="${element}" th:text="${element.displayName}">
+            </option>
+        </select>
+
+        <button type="submit">Erstellen</button>
+    </form>
+    <h2>Vorhandene Skills</h2>
+    <table id="skillTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Beschreibung</th>
+                <th>Slot</th>
+                <th>Zauberzeit</th>
+                <th>Würfelwurf</th>
+                <th>Element</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="skill : ${skills}">
+                <td th:text="${skill.displayName}">Name</td>
+                <td th:text="${skill.description}">Beschreibung</td>
+                <td th:text="${skill.slot.displayName}">Slot</td>
+                <td th:text="${skill.castingTime}">Zauberzeit</td>
+                <td th:text="${skill.roll}">Würfelwurf</td>
+                <td th:text="${skill.element.displayName}">Element</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

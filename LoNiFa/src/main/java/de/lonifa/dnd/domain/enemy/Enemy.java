@@ -47,10 +47,6 @@ public class Enemy extends BaseEntity{
 
     @Min(1)
     @Max(99999)
-    private int currentHitPoints;
-
-    @Min(1)
-    @Max(99999)
     private int maxHitPoints;
 
     @Min(1)
@@ -61,6 +57,8 @@ public class Enemy extends BaseEntity{
     @ManyToMany
     private List<Skill> skills;
 
+    @Min(1)
+    @Max(99)
     private int AC;
 
     // default constructor
@@ -98,14 +96,6 @@ public class Enemy extends BaseEntity{
 
     public void setLoot(Item loot) {
         this.loot = loot;
-    }
-
-    public int getCurrentHitPoints() {
-        return currentHitPoints;
-    }
-
-    public void setCurrentHitPoints(int currentHitPoints) {
-        this.currentHitPoints = currentHitPoints;
     }
 
     public int getMaxHitPoints() {

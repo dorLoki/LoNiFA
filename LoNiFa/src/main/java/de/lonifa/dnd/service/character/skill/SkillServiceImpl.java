@@ -39,8 +39,10 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public void registerSkill(@NonNull @Valid Skill skill) throws IllegalArgumentException {
         Integer skillId = skill.getId();
-        if (skillId == null || skillRepository.existsById(skillId)) {
-            throw new IllegalArgumentException("Skill already exists.");
+        if(skillId != null) {
+            if (skillRepository.existsById(skillId)) {
+                throw new IllegalArgumentException("Skill already exists.");
+            }
         }
         skillRepository.save(skill);
     }
